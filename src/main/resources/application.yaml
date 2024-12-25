@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: car-rental-api
+
+server:
+  port: 8060
+
+logging:
+  level:
+    root: info
+    it:
+      unitn: trace
+    org:
+      springframework:
+        security: info
