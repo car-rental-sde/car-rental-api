@@ -52,11 +52,43 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- Database -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <!-- Jackson -->
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>2.2.27</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+
+
+    <!--    <dependency>-->
+<!--      <groupId>io.swagger</groupId>-->
+<!--      <artifactId>swagger-annotations</artifactId>-->
+<!--      <version>1.6.14</version>-->
+<!--    </dependency>-->
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <version>0.2.6</version>
+    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>io.springfox</groupId>-->
+<!--      <artifactId>springfox-swagger2</artifactId>-->
+<!--      <version>3.0.0</version>-->
+<!--    </dependency>-->
+
+    <!-- Utils -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -78,6 +110,69 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>7.8.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>
+                ${project.basedir}/src/main/resources/open-api/car-rental-api.yaml
+              </inputSpec>
+              <generatorName>spring</generatorName>
+              <apiPackage>it.unitn.carrental.openapi.api</apiPackage>
+              <modelPackage>it.unitn.carrental.openapi.model</modelPackage>
+              <supportingFilesToGenerate>
+                ApiUtil.java
+              </supportingFilesToGenerate>
+              <configOptions>
+                <dateLibrary>java8</dateLibrary>
+                <delegatePattern>true</delegatePattern>
+                <generateBuilders>true</generateBuilders>
+                <useSpringBoot3>true</useSpringBoot3>
+              </configOptions>
+<!--              <additionalProperties>-->
+<!--                <property enum.property.naming="original"/>-->
+<!--              </additionalProperties>-->
+<!--              <typeMappings>-->
+<!--                <typeMapping>OffsetDateTime=LocalDateTime</typeMapping>-->
+<!--              </typeMappings>-->
+<!--              <importMappings>-->
+<!--                <importMapping>java.time.OffsetDateTime=java.time.LocalDateTime</importMapping>-->
+<!--              </importMappings>-->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--swagger-codegen-maven-plugin does not support spring boot 3 which migrates jakarta.* into jakarta.*-->
+<!--      <plugin>-->
+<!--        <groupId>com.google.code.maven-replacer-plugin</groupId>-->
+<!--        <artifactId>replacer</artifactId>-->
+<!--        <version>${maven-replacer-plugin.version}</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <phase>generate-sources</phase>-->
+<!--            <goals>-->
+<!--              <goal>replace</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--        <configuration>-->
+<!--          <includes>-->
+<!--            <include>${project.basedir}/target/generated-sources/**/*.java</include>-->
+<!--          </includes>-->
+<!--          <regex>false</regex>-->
+<!--          <token>javax.</token>-->
+<!--          <value>jakarta.</value>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
