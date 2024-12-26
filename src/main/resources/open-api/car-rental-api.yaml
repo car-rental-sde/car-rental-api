@@ -1079,7 +1079,7 @@ components:
       enum:
         - Admin
         - Employee
-        - ExternalApi # TODO: Can I do it in smarter way? Like have a specific value in db for reservation made by external api?
+        - ExternalApi # TODO: Can I do it in smarter way? Like have a specific value in db for reservation made by external api? Google how to do it better
 
     CarsSortColumn:
       type: string
