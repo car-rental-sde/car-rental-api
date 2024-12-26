@@ -1,19 +1,14 @@
 package it.unitn.carrentalapi.mapper;
 
-import it.unitn.carrental.openapi.model.*;
-import it.unitn.carrentalapi.model.*;
-import it.unitn.carrentalapi.repository.ImageRepository;
+import it.unitn.carrentalapi.openapi.model.*;
+import it.unitn.carrentalapi.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-@Mapper(componentModel = "spring", uses= ImageRepository.class)
+@Mapper(componentModel = "spring")
 public interface EntityToModelMappers {
 
     @Named("stringToJsonNullable")
@@ -49,39 +44,12 @@ public interface EntityToModelMappers {
         return UserTypeModel.ADMIN;
     }
 
-    @Named("imageToImageId")
-    static List<Long> imageToImageId(List<ImageEntity> imageList) {
-
-        List<Long> ids = new ArrayList<>();
-        for (ImageEntity image : imageList) {
-            ids.add(image.getId());
-        }
-
-        return ids;
-    }
-
-    @Named("imageIModelImage")
-    static List<ImageEntity> imageIModelImage(List<Long> imageIds) {
-
-        ImageRepository imageRepository = Mappers.getMapper(ImageRepository.class);
-
-        List<ImageEntity> images = new ArrayList<>();
-        for (Long id : imageIds) {
-            images.add(imageRepository.getOne(id));
-        }
-
-        return images;
-    }
-
-    @Mapping(source = "photos", target = "photos",  qualifiedByName = "imageToImageId")
     CarModel carToCarModel(CarEntity car);
 
-    @Mapping(source = "photos", target = "photos",  qualifiedByName = "imageIModelImage")
     CarEntity carModelToCar(CarModel carModel);
 
     @Mapping(target = "model", ignore = true )
     @Mapping(target = "equipment", ignore = true )
-    @Mapping(target = "photos", ignore = true )
     CarEntity putCarModelToCar(CarRequestModel carRequest);
 
 
@@ -114,7 +82,4 @@ public interface EntityToModelMappers {
     UserModel userToUserModel(UserEntity user);
 
     CustomerModel customerToCustomerModel(CustomerEntity customer);
-
-    ImageModel imageToImageModel(ImageEntity image);
-    ImageEntity imageModelToImage(ImageModel imageModel);
 }

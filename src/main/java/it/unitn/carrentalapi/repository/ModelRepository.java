@@ -1,6 +1,6 @@
 package it.unitn.carrentalapi.repository;
 
-import it.unitn.carrentalapi.model.ModelEntity;
+import it.unitn.carrentalapi.entity.ModelEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

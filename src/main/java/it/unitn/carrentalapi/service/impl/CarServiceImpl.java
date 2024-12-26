@@ -1,20 +1,18 @@
 package it.unitn.carrentalapi.service.impl;
 
-import it.unitn.carrental.openapi.model.CarRequestModel;
-import it.unitn.carrental.openapi.model.CarsSortColumn;
-import it.unitn.carrental.openapi.model.SortDirection;
+import it.unitn.carrentalapi.openapi.model.CarRequestModel;
+import it.unitn.carrentalapi.openapi.model.CarsSortColumn;
+import it.unitn.carrentalapi.openapi.model.SortDirection;
 import it.unitn.carrentalapi.mapper.EntityToModelMappers;
-import it.unitn.carrentalapi.model.CarEntity;
-import it.unitn.carrentalapi.model.EquipmentPieceEntity;
-import it.unitn.carrentalapi.model.ImageEntity;
+import it.unitn.carrentalapi.entity.CarEntity;
+import it.unitn.carrentalapi.entity.EquipmentPieceEntity;
 import it.unitn.carrentalapi.repository.CarRepository;
 import it.unitn.carrentalapi.repository.EquipmentPieceRepository;
-import it.unitn.carrentalapi.repository.ImageRepository;
 import it.unitn.carrentalapi.repository.ModelRepository;
 import it.unitn.carrentalapi.service.CarService;
-import it.unitn.carrentalapi.service.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +32,6 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final ModelRepository modelRepository;
     private final EquipmentPieceRepository equipmentPieceRepository;
-    private final ImageRepository imageRepository;
     private final EntityToModelMappers mappers;
 
     @Override
@@ -57,10 +54,10 @@ public class CarServiceImpl implements CarService {
                                       Integer page,
                                       Integer size) {
 
-        brand = ServiceUtils.addSqlWildcards(brand);
-        model = ServiceUtils.addSqlWildcards(model);
-        carType = ServiceUtils.addSqlWildcards(carType);
-        fuelType = ServiceUtils.addSqlWildcards(fuelType);
+        brand = addSqlWildcards(brand);
+        model = addSqlWildcards(model);
+        carType = addSqlWildcards(carType);
+        fuelType = addSqlWildcards(fuelType);
         if (startDate == null) {
             startDate = LocalDate.now().plusDays(1);
         }
@@ -107,12 +104,6 @@ public class CarServiceImpl implements CarService {
         }
         car.setEquipment( equipmentPieceList );
 
-        List<ImageEntity> imageList = new ArrayList<>();
-        for (Long imageId : carRequest.getPhotos()) {
-            imageList.add(imageRepository.getById(imageId));
-        }
-        car.setPhotos( imageList );
-
         return carRepository.save(car);
     }
 
@@ -140,11 +131,10 @@ public class CarServiceImpl implements CarService {
         car.setDayPrice(carRequest.getDayPrice());
         car.setColor(carRequest.getColor());
 
-        List<ImageEntity> imageList = car.getPhotos();
-        for (Long imageId : carRequest.getPhotos()) {
-            imageList.add(imageRepository.getById(imageId));
-        }
-
         return carRepository.save(car);
+    }
+
+    private String addSqlWildcards(String arg) {
+        return StringUtils.defaultIfBlank(arg, "") + "%";
     }
 }

@@ -1,4 +1,4 @@
-package it.unitn.carrentalapi.model;
+package it.unitn.carrentalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "user_table")
 public class UserEntity /*implements UserDetails*/ {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

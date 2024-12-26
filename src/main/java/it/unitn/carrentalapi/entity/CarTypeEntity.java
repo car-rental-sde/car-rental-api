@@ -1,4 +1,4 @@
-package it.unitn.carrentalapi.model;
+package it.unitn.carrentalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,17 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageEntity
-{
+@Table(name = "car_type")
+public class CarTypeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    @Lob @Basic(fetch = FetchType.LAZY)
-    private byte[] image;
+    @Column
+    private String name;
 }

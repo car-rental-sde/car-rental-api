@@ -1,9 +1,9 @@
 package it.unitn.carrentalapi.service;
 
-import it.unitn.carrental.openapi.model.CarRequestModel;
-import it.unitn.carrental.openapi.model.CarsSortColumn;
-import it.unitn.carrental.openapi.model.SortDirection;
-import it.unitn.carrentalapi.model.CarEntity;
+import it.unitn.carrentalapi.openapi.model.CarRequestModel;
+import it.unitn.carrentalapi.openapi.model.CarsSortColumn;
+import it.unitn.carrentalapi.openapi.model.SortDirection;
+import it.unitn.carrentalapi.entity.CarEntity;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;

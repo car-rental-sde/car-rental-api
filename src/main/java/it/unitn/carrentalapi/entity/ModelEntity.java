@@ -1,4 +1,4 @@
-package it.unitn.carrentalapi.model;
+package it.unitn.carrentalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "model")
 public class ModelEntity
 {
     @Id
@@ -17,7 +17,7 @@ public class ModelEntity
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="brandId", referencedColumnName="id", nullable=false)
+    @JoinColumn(name="brand_id", referencedColumnName="id", nullable=false)
     private BrandEntity brand;
 
     @Column(nullable = false)
@@ -30,11 +30,11 @@ public class ModelEntity
     private Integer productionYear;
 
     @ManyToOne
-    @JoinColumn(name="carTypeId", referencedColumnName="id", nullable=false)
+    @JoinColumn(name="car_type_id", referencedColumnName="id", nullable=false)
     private CarTypeEntity carType;
 
     @ManyToOne
-    @JoinColumn(name="fuelTypeId", referencedColumnName="id", nullable=false)
+    @JoinColumn(name="fuel_type_id", referencedColumnName="id", nullable=false)
     private FuelTypeEntity fuelType;
 
     @Column(nullable = false)

@@ -1,4 +1,4 @@
-package it.unitn.carrentalapi.model;
+package it.unitn.carrentalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,8 +6,8 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Entity
-@Table
 @Data
+@Table(name = "reservation")
 public class ReservationEntity
 {
 	@Id

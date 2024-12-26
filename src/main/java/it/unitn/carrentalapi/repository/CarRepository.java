@@ -1,6 +1,6 @@
 package it.unitn.carrentalapi.repository;
 
-import it.unitn.carrentalapi.model.CarEntity;
+import it.unitn.carrentalapi.entity.CarEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;

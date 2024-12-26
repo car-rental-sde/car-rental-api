@@ -657,56 +657,6 @@ paths:
         '400':
           description: Bad request
 
-  /internal/images/{id}:
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-
-    get:
-      tags:
-        - Internal
-      summary: Get image of id
-      operationId: getImage
-      responses:
-        '200':
-          description: OK
-          content:
-            image/jpeg:
-              schema:
-                type: string
-                format: byte
-        '400':
-          description: Bad request
-
-  /internal/images:
-    post:
-      tags:
-        - Internal
-      summary: Add new image
-      operationId: addImage
-
-      requestBody:
-        content:
-          image/jpeg:
-            schema:
-              type: string
-              format: byte
-
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: integer
-                format: int64
-        '400':
-          description: Bad request
-
 components:
   schemas:
 
@@ -759,11 +709,6 @@ components:
           format: int64
         color:
           type: string
-        photos:
-          type: array
-          items:
-            type: integer
-            format: int64
 
     CarRequestModel:
       type: object
@@ -785,11 +730,6 @@ components:
           format: int64
         color:
           type: string
-        photos:
-          type: array
-          items:
-            type: integer
-            format: int64
 
     CarModelModel:
       type: object
@@ -920,13 +860,6 @@ components:
         name:
           type: string
           example: Air conditioning
-
-    ImageModel:
-      type: object
-      properties:
-        name:
-          type: string
-          format: byte
 
     ReservationsPaginationResponseModel:
       type: object
@@ -1084,44 +1017,44 @@ components:
     CarsSortColumn:
       type: string
       enum:
-        - id
-        - brand
-        - model
-        - carType
-        - isGearboxAutomatic
-        - fuelType
-        - numberOfSeats
-        - productionYear
-        - beginPlace
-      default: id
+        - ID
+        - BRAND
+        - MODEL
+        - CAR_TYPE
+        - IS_GEARBOX_AUTOMATIC
+        - FUEL_TYPE
+        - NUMBER_OF_SEATS
+        - PRODUCTION_YEAR
+        - BEGIN_PLACE
+      default: ID
 
     ReservationsSortColumn:
       type: string
       enum:
-        - id
-        - brand
-        - model
-        - carType
-        - beginDate
-        - beginPlace
-        - endDate
-        - endPlace
+        - ID
+        - BRAND
+        - MODEL
+        - CAR_TYPE
+        - BEGIN_DATE
+        - BEGIN_PLACE
+        - END_DATE
+        - END_PLACE
 
     UsersSortColumn:
       type: string
       enum:
-        - userName
-        - name
-        - surname
-        - userType
-        - isBlocked
+        - USERNAME
+        - NAME
+        - SURNAME
+        - USER_TYPE
+        - IS_BLOCKED
 
     SortDirection:
       type: string
       enum:
-        - asc
-        - desc
-      default: asc
+        - ASC
+        - DESC
+      default: ASC
 
   parameters:
     PageNumber:

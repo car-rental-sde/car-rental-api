@@ -1,4 +1,4 @@
-package it.unitn.carrentalapi.model;
+package it.unitn.carrentalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -7,19 +7,22 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
 @Data
 @NoArgsConstructor
+@Table(name = "token")
 public class TokenEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(columnDefinition = "TEXT")
-    private String value;
+    private String tokenValue;
+
     private LocalDateTime created;
 
-    public TokenEntity(String value) {
-        this.value = value;
+    public TokenEntity(String tokenValue) {
+        this.tokenValue = tokenValue;
         created = LocalDateTime.now();
     }
 }

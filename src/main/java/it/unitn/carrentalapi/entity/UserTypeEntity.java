@@ -1,4 +1,4 @@
-package it.unitn.carrentalapi.model;
+package it.unitn.carrentalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,9 +6,9 @@ import lombok.Setter;
 
 
 @Entity
-@Table
 @Getter
 @Setter
+@Table(name = "user_type")
 public class UserTypeEntity
 {
     @Id

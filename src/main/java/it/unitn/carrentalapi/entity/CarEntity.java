@@ -1,18 +1,16 @@
-package it.unitn.carrentalapi.model;
+package it.unitn.carrentalapi.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "car")
 public class CarEntity
 {
     @Id
@@ -24,14 +22,14 @@ public class CarEntity
     private LocalDate additionDate;
 
     @ManyToOne
-    @JoinColumn(name="modelId", referencedColumnName="id", nullable=false)
+    @JoinColumn(name="model_id", referencedColumnName="id", nullable=false)
     private ModelEntity model;
 
     @Column(nullable = false)
     private Integer mileage;
 
     @ManyToMany
-    @JoinTable(name="equipments2Cars", joinColumns=@JoinColumn(name="carId"), inverseJoinColumns=@JoinColumn(name="equipmentId"))
+    @JoinTable(name="equipment_2_car", joinColumns=@JoinColumn(name="car_id"), inverseJoinColumns=@JoinColumn(name="equipment_id"))
     private List<EquipmentPieceEntity> equipment;
 
     @Column(nullable = false)
@@ -39,8 +37,4 @@ public class CarEntity
 
     @Column(nullable = false)
     private String color;
-
-    @OneToMany
-    @JoinColumn(name="car_id", nullable=true)
-    private List<ImageEntity> photos;
 }
