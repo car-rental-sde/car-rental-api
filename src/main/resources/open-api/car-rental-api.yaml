@@ -464,7 +464,7 @@ paths:
           schema:
             type: string
 
-        - name: userType
+        - name: userRole
           in: query
           required: false
           schema:
@@ -659,6 +659,39 @@ paths:
 
 components:
   schemas:
+
+    RegisterRequestModel:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        surname:
+          type: string
+        userRole:
+          $ref: '#/components/schemas/UserRoleModel'
+
+    AuthenticationResponseModel:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+
+    AuthenticationRequestModel:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
 
     CarsPaginationResponseModel:
       type: object
@@ -976,8 +1009,8 @@ components:
         surname:
           type: string
           example: Doe
-        userType:
-          $ref: '#/components/schemas/UserTypeModel'
+        userRole:
+          $ref: '#/components/schemas/UserRoleModel'
         isBlocked:
           type: boolean
 
@@ -1007,12 +1040,12 @@ components:
         surname:
           type: string
 
-    UserTypeModel:
+    UserRoleModel:
       type: string
       enum:
-        - Admin
-        - Employee
-        - ExternalApi # TODO: Can I do it in smarter way? Like have a specific value in db for reservation made by external api? Google how to do it better
+        - USER
+        - ADMIN
+        - API_CLIENT # TODO: Can I do it in smarter way? Like have a specific value in db for reservation made by external api? Google how to do it better
 
     CarsSortColumn:
       type: string

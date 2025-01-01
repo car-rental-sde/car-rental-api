@@ -1,6 +1,5 @@
 -- DELETE FROM car_type;
 -- DELETE FROM fuel_type;
--- DELETE FROM user_type;
 -- DELETE FROM equipment_piece;
 -- DELETE FROM equipments2cars;
 -- DELETE FROM brand;
@@ -26,11 +25,6 @@ INSERT INTO fuel_type VALUES
     (2, 'Diesel'),
     (3, 'Electric'),
     (4, 'Hydrogen');
-
-INSERT INTO user_type VALUES
-    (1, 'CarlyEmployee'),
-    (2, 'CarlyAdmin'),
-    (3, 'Api');
 
 INSERT INTO equipment_piece VALUES
     (1, 'Air Control'),
@@ -91,8 +85,8 @@ insert into customer (id, bookly_id, is_blocked, name, surname) values
     (4, 28, false, 'Robert', 'Lewandowski'),
     (5, 29, true, 'Fernando', 'Alonso');
 
-insert into user_table (id, email, is_blocked, name, password, surname, username, user_type_id) values
-    (1, 'test@test.com', false, 'admin', '$2a$10$aN5Mx3olEp4U9YKby67KAOxh/Jkt0IaksFn/on9HW5e7yTt2hXLDy', 'admin', 'admin', 2);
+insert into user_table (id, email, is_blocked, name, password, surname, username, role) values
+    (1, 'test@test.com', false, 'admin', '$2a$10$8IoXLJvZF7CLX1pkH0XQoeF81jHracfkxo9p/jLsXfMmEdKlGVa6W', 'admin', 'user', 'USER');
 
 insert into reservation (id, begin_date, begin_place, begin_position, details, end_date, end_place, end_position, is_maintenance,
                          car_id, customer_id) values

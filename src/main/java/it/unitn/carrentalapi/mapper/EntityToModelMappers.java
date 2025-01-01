@@ -28,21 +28,21 @@ public interface EntityToModelMappers {
         return jsonNullable.get();
     }
 
-    @Named("userTypeToUserTypeModel")
-    static UserTypeModel userTypeToUserTypeModel(UserTypeEntity userType) {
-
-        if (UserTypeModel.ADMIN.getValue().equals(userType.getType())) {
-            return UserTypeModel.ADMIN;
-        }
-        if (UserTypeModel.EMPLOYEE.getValue().equals(userType.getType())) {
-            return UserTypeModel.EMPLOYEE;
-        }
-        if (UserTypeModel.EXTERNAL_API.getValue().equals(userType.getType())) {
-            return UserTypeModel.EXTERNAL_API;
-        }
-
-        return UserTypeModel.ADMIN;
-    }
+//    @Named("userTypeToUserTypeModel")
+//    static UserTypeModel userTypeToUserTypeModel(UserTypeEntity userType) {
+//
+//        if (UserTypeModel.ADMIN.getValue().equals(userType.getType())) {
+//            return UserTypeModel.ADMIN;
+//        }
+//        if (UserTypeModel.EMPLOYEE.getValue().equals(userType.getType())) {
+//            return UserTypeModel.EMPLOYEE;
+//        }
+//        if (UserTypeModel.EXTERNAL_API.getValue().equals(userType.getType())) {
+//            return UserTypeModel.EXTERNAL_API;
+//        }
+//
+//        return UserTypeModel.ADMIN;
+//    }
 
     CarModel carToCarModel(CarEntity car);
 
@@ -78,7 +78,7 @@ public interface EntityToModelMappers {
     @Mapping(source = "details", target = "details",  qualifiedByName = "jsonNullableToString")
     ReservationEntity putReservationModelToReservation(ReservationRequestModel reservationRequest);
 
-    @Mapping(source = "userType", target = "userType",  qualifiedByName = "userTypeToUserTypeModel")
+//    @Mapping(source = "userType", target = "userType",  qualifiedByName = "userTypeToUserTypeModel")
     UserModel userToUserModel(UserEntity user);
 
     CustomerModel customerToCustomerModel(CustomerEntity customer);

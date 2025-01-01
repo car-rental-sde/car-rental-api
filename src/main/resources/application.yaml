@@ -17,6 +17,10 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true # create tables before populating them
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
   sql:
     init:
       mode: embedded # always | never | embedded
@@ -28,7 +32,7 @@ logging:
       unitn: trace
     org:
       springframework:
-        security: info
+        security: debug # info | debug
 
 management:
   endpoints:
