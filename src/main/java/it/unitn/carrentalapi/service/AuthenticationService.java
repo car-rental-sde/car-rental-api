@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public interface AuthenticationService {
 
-    AuthenticationResponseModel register(RegisterRequestModel request); // TODO: Create VO object
-    AuthenticationResponseModel authenticate(AuthenticationRequestModel request); // TODO: Create VO object
+    AuthenticationResponseModel register(RegisterRequestModel request);
+    AuthenticationResponseModel authenticate(AuthenticationRequestModel request);
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

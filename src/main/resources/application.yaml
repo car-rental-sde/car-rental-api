@@ -32,7 +32,7 @@ logging:
       unitn: trace
     org:
       springframework:
-        security: debug # info | debug
+        security: info # info | debug
 
 management:
   endpoints:

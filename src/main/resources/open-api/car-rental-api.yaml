@@ -6,12 +6,68 @@ info:
   version: v1
 
 tags:
+  - name: Authentication
   - name: Cars
   - name: Reservations
   - name: Users
   - name: Internal
 
 paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequestModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponseModel'
+        '400':
+          description: Bad request
+
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequestModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponseModel'
+        '400':
+          description: Bad request
+
+  /auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Refresh token
+      operationId: refresh
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+
+
   /cars/{id}:
     parameters:
       - name: id
