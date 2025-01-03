@@ -20,7 +20,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
     @Override
     public ResponseEntity<AuthenticationResponseModel> login(AuthenticationRequestModel authenticationRequestModel) {
         log.debug("Trying to authenticate user...");
-        log.trace("Authenticating user: {}", authenticationRequestModel);
+        log.trace("Authenticating user: [{}]", authenticationRequestModel);
         return ResponseEntity.ok(authenticationService.authenticate(authenticationRequestModel));
     }
 
@@ -34,7 +34,7 @@ public class AuthApiDelegateImpl implements AuthApiDelegate {
     @Override
     public ResponseEntity<AuthenticationResponseModel> register(RegisterRequestModel registerRequestModel) {
         log.debug("Trying to register user...");
-        log.trace("Registering user: {}", registerRequestModel);
+        log.trace("Registering user: [{}]", registerRequestModel);
         return ResponseEntity.ok(authenticationService.register(registerRequestModel));
     }
 }

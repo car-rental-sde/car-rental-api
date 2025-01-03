@@ -96,3 +96,11 @@ insert into reservation (id, begin_date, begin_place, begin_position, details, e
     (3, '2020-01-08', 'Politechnika', 'abc', null, '2020-01-20', 'Praga', 'abc', true, 1, null),
     (4, '2023-01-20', 'Aaa', 'abc', null, '2023-01-27', 'Mokotow', 'abc', false, 3, 1),
     (5, '2023-01-27', 'Bbb', 'abc', null, '2023-01-29', 'Bbb', 'abc', true, 4, 1);
+
+-- Restarting sequences for H2 database
+ALTER TABLE brand ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM brand);
+ALTER TABLE model ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM model);
+ALTER TABLE car ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM car);
+ALTER TABLE customer ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM customer);
+ALTER TABLE user_table ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM user_table);
+ALTER TABLE reservation ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM reservation);

@@ -55,7 +55,7 @@ public interface EntityToModelMappers {
 
     CarOverviewModel carToCarOverviewModel(CarEntity car);
 
-    BrandModel branModelBrandModel(BrandEntity brand);
+    BrandModel brandModelBrandModel(BrandEntity brand);
     CarTypeModel carTypeToCarTypeModel(CarTypeEntity carType);
     EquipmentPieceModel equipmentPieceToEquipmentPieceModel(EquipmentPieceEntity equipmentPiece);
     FuelTypeModel fuelTypeToFuelTypeModel(FuelTypeEntity fuelType);
