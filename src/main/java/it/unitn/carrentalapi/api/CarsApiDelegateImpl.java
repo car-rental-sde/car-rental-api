@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -44,21 +45,33 @@ public class CarsApiDelegateImpl implements CarsApiDelegate {
 
     @Override
     public ResponseEntity<CarModel> addCar(CarRequestModel carRequestModel) {
-        return CarsApiDelegate.super.addCar(carRequestModel);
+        log.debug("Adding car with request: [{}]", carRequestModel);
+
+        return ResponseEntity.ok(mappers.carToCarModel(carService.addCar(carRequestModel)));
     }
 
     @Override
     public ResponseEntity<CarModel> getCar(Long id) {
-        return CarsApiDelegate.super.getCar(id);
+        log.debug("Getting car with id: [{}]", id);
+
+        Optional<CarEntity> optionalCar = carService.getCar(id);
+
+        return optionalCar.map(car -> ResponseEntity.ok(mappers.carToCarModel(car)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
     public ResponseEntity<CarModel> updateCar(Long id, CarRequestModel carRequestModel) {
-        return CarsApiDelegate.super.updateCar(id, carRequestModel);
+        log.debug("Updating car with id: [{}]", id);
+
+        return ResponseEntity.ok(mappers.carToCarModel(carService.updateCar(id, carRequestModel)));
     }
 
     @Override
     public ResponseEntity<Void> deleteCar(Long id) {
-        return CarsApiDelegate.super.deleteCar(id);
+        log.debug("Deleting car with id: [{}]", id);
+
+        carService.deleteCar(id);
+        return ResponseEntity.ok().build();
     }
 }
