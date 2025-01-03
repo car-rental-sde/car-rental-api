@@ -1,13 +1,13 @@
 package it.unitn.carrentalapi;
 
-import it.unitn.carrentalapi.config.AppConfiguration;
+import it.unitn.carrentalapi.config.AppConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
 @EnableConfigurationProperties({
-        AppConfiguration.class
+        AppConfig.class
 })
 public class CarRentalApiApplication {
 
