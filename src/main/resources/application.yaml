@@ -1,3 +1,8 @@
+app:
+  environment:
+    secret-key: 698a05552cbe84fab8a1f79a458952c4c19f800daabd7edd7a7e8b3a6a1e6f57
+    jwt-expire-seconds: 3600
+
 server:
   port: 8060
 
