@@ -1138,6 +1138,15 @@ components:
         - USER_TYPE
         - IS_BLOCKED
 
+    CustomersSortColumn:
+      type: string
+      enum:
+        - ID
+        - BOOKLY_ID
+        - NAME
+        - SURNAME
+        - IS_BLOCKED
+
     SortDirection:
       type: string
       enum:

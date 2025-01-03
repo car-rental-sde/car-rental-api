@@ -21,7 +21,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query(value = "select u from UserEntity u " +
             "where u.name like :firstName " +
-            "and u.surname like :lastName ")
+            "and u.surname like :lastName ",
+
+            countQuery = "select count(u.id) from UserEntity u " +
+                    "where u.name like :firstName " +
+                    "and u.surname like :lastName ")
     Page<UserEntity> searchUser(@Param("firstName") String firstName,
                           @Param("lastName") String lastName,
                           @Param("userType") String userType,
