@@ -10,7 +10,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface ReservationService {
-    Page<ReservationEntity> searchReservations(Long carId,
+    Page<ReservationEntity> searchReservations(Long customerExternalId,
+                                               Long carId,
                                                LocalDate startDate,
                                                LocalDate endDate,
                                                String startPlace,

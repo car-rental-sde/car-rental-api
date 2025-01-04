@@ -14,24 +14,33 @@ import java.time.LocalDate;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
 
-    @EntityGraph(attributePaths = {"car.model", "car.model.brand"})
-    @Query(value = "select r from ReservationEntity r " +
-            "where r.beginDate > :startDate " +
-            "and r.endDate < :endDate " +
-            "and r.beginPlace like :startPlace " +
-            "and r.endPlace like :endPlace " +
-            "and (:carId = null or r.car.id = :carId) " ,
+    @EntityGraph(attributePaths = {"car.model", "car.model.brand"}) // TODO: check if this is correct, why needed?
+    @Query(value = """
+            select r from ReservationEntity r
+            where r.beginDate > :startDate
+            and r.endDate < :endDate
+            and r.beginPlace like :startPlace
+            and r.endPlace like :endPlace
+            and (:carId = null or r.car.id = :carId)
+            and (:customerExternalId = null or r.customer.externalId = :customerExternalId)
+            """,
 
-            countQuery = "select count(*) from ReservationEntity r " +
-                    "where r.beginDate > :startDate " +
-                    "and r.endDate < :endDate " +
-                    "and r.beginPlace like :startPlace " +
-                    "and r.endPlace like :endPlace " +
-                    "and (:carId = null or r.car.id = :carId) ")
-    Page<ReservationEntity> searchReservations(@Param("carId") Long carId,
-                                         @Param("startDate") LocalDate startDate,
-                                         @Param("endDate") LocalDate endDate,
-                                         @Param("startPlace") String startPlace,
-                                         @Param("endPlace") String endPlace,
-                                         Pageable pageable);
+            countQuery = """
+                    select count(*) from ReservationEntity r
+                    where r.beginDate > :startDate
+                    and r.endDate < :endDate
+                    and r.beginPlace like :startPlace
+                    and r.endPlace like :endPlace
+                    and (:carId = null or r.car.id = :carId)
+                    and (:customerExternalId = null or r.customer.externalId = :customerExternalId)
+            """)
+    Page<ReservationEntity> searchReservations(
+            @Param("customerExternalId") Long customerExternalId,
+            @Param("carId") Long carId,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
+            @Param("startPlace") String startPlace,
+            @Param("endPlace") String endPlace,
+            Pageable pageable
+    );
 }

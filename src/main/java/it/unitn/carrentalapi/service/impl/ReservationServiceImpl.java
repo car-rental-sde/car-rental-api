@@ -36,7 +36,8 @@ public class ReservationServiceImpl implements ReservationService {
     private final EntityToModelMappers mappers;
 
     @Override
-    public Page<ReservationEntity> searchReservations(Long carId,
+    public Page<ReservationEntity> searchReservations(Long customerExternalId,
+                                                      Long carId,
                                                       LocalDate startDate,
                                                       LocalDate endDate,
                                                       String startPlace,
@@ -74,7 +75,7 @@ public class ReservationServiceImpl implements ReservationService {
             default -> PageRequest.of(page - 1, size, direction, sortBy.getValue());
         };
 
-        return reservationRepository.searchReservations(carId, startDate, endDate, startPlace, endPlace, pageRequest);
+        return reservationRepository.searchReservations(customerExternalId, carId, startDate, endDate, startPlace, endPlace, pageRequest);
     }
 
     @Override
