@@ -44,19 +44,19 @@ public class InternalServiceImpl implements InternalService {
     }
 
     @Override
-    public List<ModelEntity> getModels() {
+    public List<CarModelEntity> getModels() {
         return modelRepository.findAll();
     }
 
     @Override
-    public List<ModelEntity> getModelsByBrands(Long brandId) {
+    public List<CarModelEntity> getModelsByBrands(Long brandId) {
         return modelRepository.findAllByBrandId(brandId);
     }
 
     @Override
-    public ModelEntity addModel(CarModelRequestModel modelRequest) {
+    public CarModelEntity addModel(CarModelRequestModel modelRequest) {
 
-        ModelEntity model = mappers.modelRequestToModel(modelRequest);
+        CarModelEntity model = mappers.modelRequestToModel(modelRequest);
         model.setBrand(brandRepository.getById(modelRequest.getBrandId()));
         model.setCarType(carTypeRepository.getById(modelRequest.getCarTypeId()));
         model.setFuelType(fuelTypeRepository.getById(modelRequest.getFuelTypeId()));

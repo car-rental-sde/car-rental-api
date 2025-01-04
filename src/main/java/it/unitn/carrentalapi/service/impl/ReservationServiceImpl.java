@@ -32,7 +32,6 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final CarRepository carRepository;
     private final CustomerRepository customerRepository;
-    private final UserRepository userRepository; // TODO: ??
     private final EntityToModelMappers mappers;
 
     @Override
@@ -85,6 +84,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         CarEntity car = carRepository.getCarIfNoReservation(reservationRequest.getCarId(), reservationRequest.getBeginDate(), reservationRequest.getEndDate());
         if (car == null) {
+            log.debug("Car is not available");
             return Optional.empty();
         }
         reservation.setCar(car);
@@ -95,6 +95,7 @@ public class ReservationServiceImpl implements ReservationService {
             if (customer.isPresent()) {
                 reservation.setCustomer(customerRepository.getByExternalId(reservationRequest.getCustomer().getExternalId()));
             } else {
+                log.debug("Customer not found, for new reservation creating new customer [{}]", reservationRequest.getCustomer());
                 createAndSaveNewCustomer(reservationRequest, reservation);
             }
         }
@@ -139,11 +140,11 @@ public class ReservationServiceImpl implements ReservationService {
                 customerRepository.save(customer);
                 reservation.setCustomer(customerRepository.getById(reservationRequest.getCustomer().getExternalId()));
             } else {
+                log.debug("Customer not found, for reservation [{}] creating new customer [{}]", id, reservationRequest.getCustomer());
                 createAndSaveNewCustomer(reservationRequest, reservation);
             }
-
-
         }
+
         return reservationRepository.save(reservation);
     }
 

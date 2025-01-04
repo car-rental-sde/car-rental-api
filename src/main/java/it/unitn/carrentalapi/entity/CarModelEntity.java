@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "model")
-public class ModelEntity
+public class CarModelEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,6 @@ public class ModelEntity
 
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = true)
-    private String variant;
 
     @Column(nullable = false)
     private Integer productionYear;

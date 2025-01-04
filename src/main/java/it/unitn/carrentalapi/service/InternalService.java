@@ -10,7 +10,7 @@ public interface InternalService {
     List<CarTypeEntity> getCarTypes();
     List<EquipmentPieceEntity> getEquipmentPieces();
     List<FuelTypeEntity> getFuelTypes();
-    List<ModelEntity> getModels();
-    List<ModelEntity> getModelsByBrands(Long brandId);
-    ModelEntity addModel(CarModelRequestModel modelRequest);
+    List<CarModelEntity> getModels();
+    List<CarModelEntity> getModelsByBrands(Long brandId);
+    CarModelEntity addModel(CarModelRequestModel modelRequest);
 }

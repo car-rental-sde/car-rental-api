@@ -23,7 +23,7 @@ public class CarEntity
 
     @ManyToOne
     @JoinColumn(name="model_id", referencedColumnName="id", nullable=false)
-    private ModelEntity model;
+    private CarModelEntity model;
 
     @Column(nullable = false)
     private Integer mileage;

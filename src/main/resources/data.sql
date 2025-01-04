@@ -58,12 +58,12 @@ INSERT INTO brand(id, country, logo_url, name) VALUES
     (23, 'KR', '', 'Kia');
 
 insert into model (id, avg_fuel_consumption, horse_power, is_gearbox_automatic, name, number_of_doors, number_of_seats,
-                   production_year, trunk_capacity, variant, brand_id, car_type_id, fuel_type_id) values
-    (1, 5, 500, false, 'Mustang', 4, 4, 2004, 2000, null, 1, 6, 1),
-    (2, 5.5, 400, true, 'Corvette', 4, 4, 2002, 2000, null, 2, 6, 1),
-    (3, 6.5, 600, false, 'Viper', 4, 4, 2001, 2000, null, 3, 6, 1),
-    (4, 7.5, 150, false, 'Grand Cherokee', 4, 4, 2003, 2000, null, 4, 4, 2),
-    (5, 3.5, 80, true, '500', 4, 4, 2005, 2000, null, 5, 3, 1);
+                   production_year, trunk_capacity, brand_id, car_type_id, fuel_type_id) values
+    (1, 5, 500, false, 'Mustang', 4, 4, 2004, 2000, 1, 6, 1),
+    (2, 5.5, 400, true, 'Corvette', 4, 4, 2002, 2000, 2, 6, 1),
+    (3, 6.5, 600, false, 'Viper', 4, 4, 2001, 2000, 3, 6, 1),
+    (4, 7.5, 150, false, 'Grand Cherokee', 4, 4, 2003, 2000, 4, 4, 2),
+    (5, 3.5, 80, true, '500', 4, 4, 2005, 2000, 5, 3, 1);
 
 insert into car (id, day_price, addition_date, color, mileage, model_id) values
     (1, 20, '2024-01-01', 'Czerwony', 200000, 1),

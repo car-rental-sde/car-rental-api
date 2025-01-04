@@ -1,32 +1,13 @@
 package it.unitn.carrentalapi.mapper;
 
-import it.unitn.carrentalapi.openapi.model.*;
 import it.unitn.carrentalapi.entity.*;
+import it.unitn.carrentalapi.openapi.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 
 @Mapper(componentModel = "spring")
 public interface EntityToModelMappers {
-
-    @Named("stringToJsonNullable")
-    static JsonNullable<String> stringToJsonNullable(String variant) {
-        return JsonNullable.of(variant);
-    }
-
-    @Named("jsonNullableToString")
-    static String jsonNullableToString(JsonNullable<String> jsonNullable) {
-        if (jsonNullable == null) {
-            return null;
-        }
-        if (!jsonNullable.isPresent()) {
-            return null;
-        }
-
-        return jsonNullable.get();
-    }
 
 //    @Named("userTypeToUserTypeModel")
 //    static UserTypeModel userTypeToUserTypeModel(UserTypeEntity userType) {
@@ -52,7 +33,6 @@ public interface EntityToModelMappers {
     @Mapping(target = "equipment", ignore = true )
     CarEntity putCarModelToCar(CarRequestModel carRequest);
 
-
     CarOverviewModel carToCarOverviewModel(CarEntity car);
 
     BrandModel brandModelBrandModel(BrandEntity brand);
@@ -60,17 +40,13 @@ public interface EntityToModelMappers {
     EquipmentPieceModel equipmentPieceToEquipmentPieceModel(EquipmentPieceEntity equipmentPiece);
     FuelTypeModel fuelTypeToFuelTypeModel(FuelTypeEntity fuelType);
 
-    @Mapping(source = "variant", target = "variant",  qualifiedByName = "stringToJsonNullable")
-    CarModelModel modelToModelModel(ModelEntity model);
+    CarModelModel modelToModelModel(CarModelEntity model);
 
-    @Mapping(source = "variant", target = "variant",  qualifiedByName = "jsonNullableToString")
-    ModelEntity modelModelToModel(CarModelModel modelModel);
+    CarModelEntity modelModelToModel(CarModelModel modelModel);
 
-    @Mapping(source = "variant", target = "variant",  qualifiedByName = "jsonNullableToString")
-    ModelEntity modelRequestToModel(CarModelRequestModel modelRequest);
+    CarModelEntity modelRequestToModel(CarModelRequestModel modelRequest);
 
-    @Mapping(source = "variant", target = "variant",  qualifiedByName = "stringToJsonNullable")
-    CarModelRequestModel modelToModelRequest(ModelEntity model);
+    CarModelRequestModel modelToModelRequest(CarModelEntity model);
 
     ReservationModel reservationToReservationModel(ReservationEntity reservation);
 
