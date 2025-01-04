@@ -65,7 +65,7 @@ public class ReservationsApiImpl implements ReservationsApiDelegate {
 
         Optional<ReservationEntity> reservationOptional = reservationService.addReservation(reservationRequest);
         return reservationOptional.map(reservationEntity -> ResponseEntity.ok(mappers.reservationToReservationModel(reservationEntity)))
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+                .orElseGet(() -> ResponseEntity.badRequest().build()); // TODO: Other code when car is not available? Like in pc-profiles?
 
     }
 

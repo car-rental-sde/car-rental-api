@@ -16,14 +16,11 @@ public class CustomerEntity
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private Long booklyId;
+    private Long externalId;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String surname;
-
-    @Column(nullable = false)
-    private Boolean isBlocked;
 }

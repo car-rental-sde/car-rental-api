@@ -1092,19 +1092,17 @@ components:
         id:
           type: integer
           format: int64
-        booklyId:
+        externalId:
           type: integer
         name:
           type: string
         surname:
           type: string
-        isBlocked:
-          type: boolean
 
     CustomerRequestModel:
       type: object
       properties:
-        booklyId:
+        externalId:
           type: integer
           format: int64
         name:
@@ -1152,7 +1150,6 @@ components:
         - NAME
         - SURNAME
         - USER_TYPE
-        - IS_BLOCKED
 
     CustomersSortColumn:
       type: string
@@ -1161,7 +1158,6 @@ components:
         - BOOKLY_ID
         - NAME
         - SURNAME
-        - IS_BLOCKED
 
     SortDirection:
       type: string

@@ -66,6 +66,7 @@ public class ReservationServiceImpl implements ReservationService {
         Pageable pageRequest;
         Sort.Direction direction = SortDirection.ASC.equals(sortDirection) ?
                 Sort.Direction.ASC : Sort.Direction.DESC;
+
         pageRequest = switch (sortBy) {
             case BRAND -> PageRequest.of(page - 1, size, direction, "car.model.brand.name");
             case MODEL -> PageRequest.of(page - 1, size, direction, "car.model.name");
@@ -88,19 +89,12 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setCar(car);
 
         if (reservationRequest.getCustomer() != null) {
-            Optional<CustomerEntity> customer = customerRepository.findByBooklyId(reservationRequest.getCustomer().getBooklyId());
+            Optional<CustomerEntity> customer = customerRepository.findByExternalId(reservationRequest.getCustomer().getExternalId());
 
             if (customer.isPresent()) {
-                reservation.setCustomer(customerRepository.getByBooklyId(reservationRequest.getCustomer().getBooklyId()));
+                reservation.setCustomer(customerRepository.getByExternalId(reservationRequest.getCustomer().getExternalId()));
             } else {
-                CustomerEntity newCustomer = new CustomerEntity();
-                newCustomer.setName(reservationRequest.getCustomer().getName());
-                newCustomer.setSurname(reservationRequest.getCustomer().getSurname());
-                newCustomer.setBooklyId(reservationRequest.getCustomer().getBooklyId());
-                newCustomer.setIsBlocked(false);
-                customerRepository.save(newCustomer);
-
-                reservation.setCustomer(customerRepository.getByBooklyId(newCustomer.getBooklyId()));
+                createAndSaveNewCustomer(reservationRequest, reservation);
             }
         }
 
@@ -134,30 +128,33 @@ public class ReservationServiceImpl implements ReservationService {
 
         // add or update customer
         if (reservationRequest.getCustomer() != null) {
-            Optional<CustomerEntity> customerOptional = customerRepository.findByBooklyId(reservationRequest.getCustomer().getBooklyId());
+            Optional<CustomerEntity> customerOptional = customerRepository.findByExternalId(reservationRequest.getCustomer().getExternalId());
 
             if (customerOptional.isPresent()) {
                 CustomerEntity customer = customerOptional.get();
-                customer.setBooklyId(reservationRequest.getCustomer().getBooklyId());
+                customer.setExternalId(reservationRequest.getCustomer().getExternalId());
                 customer.setName(reservationRequest.getCustomer().getName());
                 customer.setSurname(reservationRequest.getCustomer().getSurname());
 
                 customerRepository.save(customer);
-                reservation.setCustomer(customerRepository.getById(reservationRequest.getCustomer().getBooklyId()));
+                reservation.setCustomer(customerRepository.getById(reservationRequest.getCustomer().getExternalId()));
             } else {
-                CustomerEntity newCustomer = new CustomerEntity();
-                newCustomer.setName(reservationRequest.getCustomer().getName());
-                newCustomer.setSurname(reservationRequest.getCustomer().getSurname());
-                newCustomer.setBooklyId(reservationRequest.getCustomer().getBooklyId());
-                newCustomer.setIsBlocked(false);
-                customerRepository.save(newCustomer);
-
-                reservation.setCustomer(customerRepository.getByBooklyId(newCustomer.getBooklyId()));
+                createAndSaveNewCustomer(reservationRequest, reservation);
             }
 
 
         }
         return reservationRepository.save(reservation);
+    }
+
+    private void createAndSaveNewCustomer(ReservationRequestModel reservationRequest, ReservationEntity reservation) {
+        CustomerEntity newCustomer = new CustomerEntity();
+        newCustomer.setName(reservationRequest.getCustomer().getName());
+        newCustomer.setSurname(reservationRequest.getCustomer().getSurname());
+        newCustomer.setExternalId(reservationRequest.getCustomer().getExternalId());
+        customerRepository.save(newCustomer);
+
+        reservation.setCustomer(customerRepository.getByExternalId(newCustomer.getExternalId()));
     }
 
     private String addSqlWildcards(String arg) {

@@ -14,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -26,7 +24,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Page<CustomerEntity> searchCustomers(String name,
                                                 String surname,
-                                                Boolean isBlocked,
                                                 CustomersSortColumn sortBy,
                                                 SortDirection sortDirection,
                                                 Integer page,
@@ -47,34 +44,9 @@ public class CustomerServiceImpl implements CustomerService {
             default -> PageRequest.of(page - 1, size, direction, sortBy.getValue());
         };
 
-        Page<CustomerEntity> customerPage;
-        if (isBlocked == null) {
-            customerPage = customerRepository.searchCustomers(name, surname, pageRequest);
-        } else {
-            customerPage = customerRepository.searchCustomersIsBlocked(name, surname, isBlocked, pageRequest);
-        }
+        Page<CustomerEntity> customerPage = customerRepository.searchCustomers(name, surname, pageRequest);
 
         return customerPage;
-    }
-
-    @Override
-    public void blockCustomer(Long customerId) {
-        Optional<CustomerEntity> customer = customerRepository.findById(customerId);
-
-        if (customer.isPresent()) {
-            customer.get().setIsBlocked(true);
-            customerRepository.save(customer.get());
-        }
-    }
-
-    @Override
-    public void unblockCustomer(Long customerId) {
-        Optional<CustomerEntity> customer = customerRepository.findById(customerId);
-
-        if (customer.isPresent()) {
-            customer.get().setIsBlocked(false);
-            customerRepository.save(customer.get());
-        }
     }
 
     private String addSqlWildcards(String arg) {

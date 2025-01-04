@@ -78,16 +78,16 @@ insert into equipment_2_car (car_id, equipment_id) values
     (2, 2),
     (2, 2);
 
-insert into customer (id, bookly_id, is_blocked, name, surname) values
+insert into user_table (id, email, is_blocked, name, password, surname, username, role) values
+    (1, 'example@example.com', false, 'user1', '$2a$10$8IoXLJvZF7CLX1pkH0XQoeF81jHracfkxo9p/jLsXfMmEdKlGVa6W', 'user1s', 'user', 'USER'),
+    (2, 'test@test.com', false, 'api1', '$2a$10$X68Q8foGehOGC9.88FUlT.MJpptz.Q1HN.hEKXl2NhdCDPtV6KQyi', 'api1s', 'userapi', 'API_CLIENT');
+
+insert into customer (id, external_id, is_blocked, name, surname) values
     (1, 20, false, 'Cristiano', 'Ronaldo'),
     (2, 22, false, 'Zygzak', 'McQueen'),
     (3, 25, true, 'Peter', 'Parker'),
     (4, 28, false, 'Robert', 'Lewandowski'),
     (5, 29, true, 'Fernando', 'Alonso');
-
-insert into user_table (id, email, is_blocked, name, password, surname, username, role) values
-    (1, 'example@example.com', false, 'user1', '$2a$10$8IoXLJvZF7CLX1pkH0XQoeF81jHracfkxo9p/jLsXfMmEdKlGVa6W', 'user1s', 'user', 'USER'),
-    (2, 'test@test.com', false, 'api1', '$2a$10$X68Q8foGehOGC9.88FUlT.MJpptz.Q1HN.hEKXl2NhdCDPtV6KQyi', 'api1s', 'userapi', 'API_CLIENT');
 
 insert into reservation (id, begin_date, begin_place, begin_position, details, end_date, end_place, end_position, is_maintenance,
                          car_id, customer_id) values

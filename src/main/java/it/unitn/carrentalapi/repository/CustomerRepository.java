@@ -13,8 +13,8 @@ import java.util.Optional;
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
-    Optional<CustomerEntity> findByBooklyId(Long booklyId);
-    CustomerEntity getByBooklyId(Long booklyId);
+    Optional<CustomerEntity> findByExternalId(Long externalId);
+    CustomerEntity getByExternalId(Long externalId);
 
     @Query(value = "select c from CustomerEntity c " +
             "where c.name like :name " +
@@ -26,18 +26,4 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> 
     Page<CustomerEntity> searchCustomers(@Param("name") String name,
                               @Param("surname") String surname,
                               Pageable pageable);
-
-    @Query(value = "select c from CustomerEntity c " +
-            "where c.name like :name " +
-            "and c.surname like :surname " +
-            "and c.isBlocked = :isBlocked ",
-
-            countQuery = "select count(c.id) from CustomerEntity c " +
-                    "where c.name like :name " +
-                    "and c.surname like :surname " +
-                    "and c.isBlocked = :isBlocked ")
-    Page<CustomerEntity> searchCustomersIsBlocked(@Param("name") String name,
-                         @Param("surname") String surname,
-                         @Param("isBlocked") Boolean isBlocked,
-                         Pageable pageable);
 }
