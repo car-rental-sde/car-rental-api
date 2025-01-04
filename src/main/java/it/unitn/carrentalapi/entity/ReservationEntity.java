@@ -40,9 +40,6 @@ public class ReservationEntity
 	@Column(nullable = false)
 	private Boolean isMaintenance;
 
-	@Column(nullable = true)
-	private String details;
-
 	@ManyToOne
 	@JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)
 	private CustomerEntity customer;

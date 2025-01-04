@@ -990,9 +990,6 @@ components:
           example: -77.0364,38.8951
         isMaintenance:
           type: boolean
-        details:
-          type: string
-          nullable: true
         customer:
           $ref: '#/components/schemas/CustomerModel'
 
@@ -1022,9 +1019,6 @@ components:
           example: -77.0364,38.8951
         isMaintenance:
           type: boolean
-        details:
-          type: string
-          nullable: true
         customer:
           $ref: '#/components/schemas/CustomerRequestModel'
 

@@ -82,20 +82,20 @@ insert into user_table (id, email, is_blocked, name, password, surname, username
     (1, 'example@example.com', false, 'user1', '$2a$10$8IoXLJvZF7CLX1pkH0XQoeF81jHracfkxo9p/jLsXfMmEdKlGVa6W', 'user1s', 'user', 'USER'),
     (2, 'test@test.com', false, 'api1', '$2a$10$X68Q8foGehOGC9.88FUlT.MJpptz.Q1HN.hEKXl2NhdCDPtV6KQyi', 'api1s', 'userapi', 'API_CLIENT');
 
-insert into customer (id, external_id, is_blocked, name, surname) values
-    (1, 20, false, 'Cristiano', 'Ronaldo'),
-    (2, 22, false, 'Zygzak', 'McQueen'),
-    (3, 25, true, 'Peter', 'Parker'),
-    (4, 28, false, 'Robert', 'Lewandowski'),
-    (5, 29, true, 'Fernando', 'Alonso');
+insert into customer (id, external_id,  name, surname) values
+    (1, 20, 'Cristiano', 'Ronaldo'),
+    (2, 22, 'Zygzak', 'McQueen'),
+    (3, 25, 'Peter', 'Parker'),
+    (4, 28, 'Robert', 'Lewandowski'),
+    (5, 29, 'Fernando', 'Alonso');
 
-insert into reservation (id, begin_date, begin_place, begin_position, details, end_date, end_place, end_position, is_maintenance,
+insert into reservation (id, begin_date, begin_place, begin_position, end_date, end_place, end_position, is_maintenance,
                          car_id, customer_id) values
-    (1, '2023-05-01', 'Mokotow', 'abc', null, '2023-05-05', 'Mokotow', 'abc', false, 1, 1),
-    (2, '2020-01-05', 'Praga', 'abc', null, '2020-01-06', 'Aaa', 'abc', false, 2, 1),
-    (3, '2020-01-08', 'Politechnika', 'abc', null, '2020-01-20', 'Praga', 'abc', true, 1, null),
-    (4, '2023-01-20', 'Aaa', 'abc', null, '2023-01-27', 'Mokotow', 'abc', false, 3, 1),
-    (5, '2023-01-27', 'Bbb', 'abc', null, '2023-01-29', 'Bbb', 'abc', true, 4, 1);
+    (1, '2023-05-01', 'Mokotow', 'abc', '2023-05-05', 'Mokotow', 'abc', false, 1, 1),
+    (2, '2020-01-05', 'Praga', 'abc', '2020-01-06', 'Aaa', 'abc', false, 2, 1),
+    (3, '2020-01-08', 'Politechnika', 'abc', '2020-01-20', 'Praga', 'abc', true, 1, null),
+    (4, '2023-01-20', 'Aaa', 'abc', '2023-01-27', 'Mokotow', 'abc', false, 3, 1),
+    (5, '2023-01-27', 'Bbb', 'abc', '2023-01-29', 'Bbb', 'abc', true, 4, 1);
 
 -- Restarting sequences for H2 database
 ALTER TABLE brand ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM brand);

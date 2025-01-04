@@ -117,7 +117,6 @@ public class ReservationServiceImpl implements ReservationService {
         ReservationEntity reservation = reservationRepository.getById(id);
         reservation.setCar(carRepository.getById(reservationRequest.getCarId()));
 
-        reservation.setDetails(EntityToModelMappers.jsonNullableToString(reservationRequest.getDetails()));
         reservation.setBeginDate(reservationRequest.getBeginDate());
         reservation.setEndDate(reservationRequest.getEndDate());
         reservation.setBeginPlace(reservationRequest.getBeginPlace());

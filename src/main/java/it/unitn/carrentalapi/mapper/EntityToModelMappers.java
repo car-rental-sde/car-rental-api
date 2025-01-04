@@ -72,10 +72,8 @@ public interface EntityToModelMappers {
     @Mapping(source = "variant", target = "variant",  qualifiedByName = "stringToJsonNullable")
     CarModelRequestModel modelToModelRequest(ModelEntity model);
 
-    @Mapping(source = "details", target = "details",  qualifiedByName = "stringToJsonNullable")
     ReservationModel reservationToReservationModel(ReservationEntity reservation);
 
-    @Mapping(source = "details", target = "details",  qualifiedByName = "jsonNullableToString")
     ReservationEntity putReservationModelToReservation(ReservationRequestModel reservationRequest);
 
 //    @Mapping(source = "userType", target = "userType",  qualifiedByName = "userTypeToUserTypeModel")
