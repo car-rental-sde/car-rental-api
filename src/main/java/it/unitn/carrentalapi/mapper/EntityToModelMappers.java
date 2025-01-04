@@ -4,26 +4,27 @@ import it.unitn.carrentalapi.entity.*;
 import it.unitn.carrentalapi.openapi.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 
 @Mapper(componentModel = "spring")
 public interface EntityToModelMappers {
 
-//    @Named("userTypeToUserTypeModel")
-//    static UserTypeModel userTypeToUserTypeModel(UserTypeEntity userType) {
-//
-//        if (UserTypeModel.ADMIN.getValue().equals(userType.getType())) {
-//            return UserTypeModel.ADMIN;
-//        }
-//        if (UserTypeModel.EMPLOYEE.getValue().equals(userType.getType())) {
-//            return UserTypeModel.EMPLOYEE;
-//        }
-//        if (UserTypeModel.EXTERNAL_API.getValue().equals(userType.getType())) {
-//            return UserTypeModel.EXTERNAL_API;
-//        }
-//
-//        return UserTypeModel.ADMIN;
-//    }
+    @Named("roleToUserRoleModel")
+    static UserRoleModel roleToUserRoleModel(UserRole userType) {
+
+        if (UserRoleModel.ADMIN.getValue().equals(userType.name())) {
+            return UserRoleModel.ADMIN;
+        }
+        if (UserRoleModel.USER.getValue().equals(userType.name())) {
+            return UserRoleModel.USER;
+        }
+        if (UserRoleModel.API_CLIENT.getValue().equals(userType.name())) {
+            return UserRoleModel.API_CLIENT;
+        }
+
+        return UserRoleModel.USER;
+    }
 
     CarModel carToCarModel(CarEntity car);
 
@@ -52,7 +53,7 @@ public interface EntityToModelMappers {
 
     ReservationEntity putReservationModelToReservation(ReservationRequestModel reservationRequest);
 
-//    @Mapping(source = "userType", target = "userType",  qualifiedByName = "userTypeToUserTypeModel")
+    @Mapping(source = "role", target = "userRole",  qualifiedByName = "roleToUserRoleModel")
     UserModel userToUserModel(UserEntity user);
 
     CustomerModel customerToCustomerModel(CustomerEntity customer);
