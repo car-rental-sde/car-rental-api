@@ -970,8 +970,6 @@ components:
           example: Doe
         userRole:
           $ref: '#/components/schemas/UserRoleModel'
-        isBlocked:
-          type: boolean
 
     NewUserModel:
       type: object
