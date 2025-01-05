@@ -19,8 +19,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
             select r from ReservationEntity r
             where r.beginDate > :startDate
             and r.endDate < :endDate
-            and r.beginPlace like :startPlace
-            and r.endPlace like :endPlace
             and (:carId = null or r.car.id = :carId)
             and (:customerExternalId = null or r.customer.externalId = :customerExternalId)
             """,
@@ -29,8 +27,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
                     select count(*) from ReservationEntity r
                     where r.beginDate > :startDate
                     and r.endDate < :endDate
-                    and r.beginPlace like :startPlace
-                    and r.endPlace like :endPlace
                     and (:carId = null or r.car.id = :carId)
                     and (:customerExternalId = null or r.customer.externalId = :customerExternalId)
             """)
@@ -39,8 +35,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
             @Param("carId") Long carId,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
-            @Param("startPlace") String startPlace,
-            @Param("endPlace") String endPlace,
             Pageable pageable
     );
 }

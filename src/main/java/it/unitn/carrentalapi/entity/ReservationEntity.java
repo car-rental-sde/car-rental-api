@@ -26,12 +26,6 @@ public class ReservationEntity
 	private LocalDate endDate;
 
 	@Column(nullable = false)
-	private String beginPlace;
-
-	@Column(nullable = false)
-	private String endPlace;
-
-	@Column(nullable = false)
 	private String beginPosition;
 
 	@Column(nullable = false)
@@ -39,6 +33,9 @@ public class ReservationEntity
 
 	@Column(nullable = false)
 	private Boolean isMaintenance;
+
+	@Column(nullable = false)
+	private Long cost;
 
 	@ManyToOne
 	@JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)

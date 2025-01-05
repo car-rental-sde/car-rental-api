@@ -28,18 +28,16 @@ public class ReservationsApiImpl implements ReservationsApiDelegate {
                                                                                   Long carId,
                                                                                   LocalDate startDate,
                                                                                   LocalDate endDate,
-                                                                                  String startPlace,
-                                                                                  String endPlace,
                                                                                   ReservationsSortColumn sortBy,
                                                                                   SortDirection sortDirection,
                                                                                   Integer page,
                                                                                   Integer size) {
 
-        log.debug("Searching reservations with customerExternalId: [{}], carId: [{}], startDate: [{}], endDate: [{}], startPlace: [{}], " +
-                        "endPlace: [{}], sortBy: [{}], sortDirection: [{}], page: [{}], size: [{}]",
-                customerExternalId, carId, startDate, endDate, startPlace, endPlace, sortBy, sortDirection, page, size);
+        log.debug("Searching reservations with customerExternalId: [{}], carId: [{}], startDate: [{}], endDate: [{}], " +
+                        "sortBy: [{}], sortDirection: [{}], page: [{}], size: [{}]",
+                customerExternalId, carId, startDate, endDate, sortBy, sortDirection, page, size);
 
-        Page<ReservationEntity> reservations = reservationService.searchReservations(customerExternalId, carId, startDate, endDate, startPlace, endPlace, sortBy, sortDirection, page, size);
+        Page<ReservationEntity> reservations = reservationService.searchReservations(customerExternalId, carId, startDate, endDate, sortBy, sortDirection, page, size);
 
         ReservationsPaginationResponseModel response = new ReservationsPaginationResponseModel();
         response.setReservations(reservations.stream().map(mappers::reservationToReservationModel).toList());

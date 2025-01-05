@@ -3,6 +3,7 @@ package it.unitn.carrentalapi.service.impl;
 import it.unitn.carrentalapi.entity.CarEntity;
 import it.unitn.carrentalapi.entity.CustomerEntity;
 import it.unitn.carrentalapi.entity.ReservationEntity;
+import it.unitn.carrentalapi.facade.MapApiFacade;
 import it.unitn.carrentalapi.mapper.EntityToModelMappers;
 import it.unitn.carrentalapi.openapi.model.ReservationRequestModel;
 import it.unitn.carrentalapi.openapi.model.ReservationsSortColumn;
@@ -10,11 +11,9 @@ import it.unitn.carrentalapi.openapi.model.SortDirection;
 import it.unitn.carrentalapi.repository.CarRepository;
 import it.unitn.carrentalapi.repository.CustomerRepository;
 import it.unitn.carrentalapi.repository.ReservationRepository;
-import it.unitn.carrentalapi.repository.UserRepository;
 import it.unitn.carrentalapi.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,14 +32,15 @@ public class ReservationServiceImpl implements ReservationService {
     private final CarRepository carRepository;
     private final CustomerRepository customerRepository;
     private final EntityToModelMappers mappers;
+    private final MapApiFacade mapApiFacade;
+
+    private static final String TRENTO_PARKING_POSITION = "46.06706818314613,11.150432144111885";
 
     @Override
     public Page<ReservationEntity> searchReservations(Long customerExternalId,
                                                       Long carId,
                                                       LocalDate startDate,
                                                       LocalDate endDate,
-                                                      String startPlace,
-                                                      String endPlace,
                                                       ReservationsSortColumn sortBy,
                                                       SortDirection sortDirection,
                                                       Integer page,
@@ -53,8 +53,6 @@ public class ReservationServiceImpl implements ReservationService {
         if (endDate == null) {
             endDate = LocalDate.of(2500, 1, 1);
         }
-        startPlace = addSqlWildcards(startPlace);
-        endPlace = addSqlWildcards(endPlace);
 
         if (sortBy == null) {
             sortBy = ReservationsSortColumn.ID;
@@ -74,7 +72,7 @@ public class ReservationServiceImpl implements ReservationService {
             default -> PageRequest.of(page - 1, size, direction, sortBy.getValue());
         };
 
-        return reservationRepository.searchReservations(customerExternalId, carId, startDate, endDate, startPlace, endPlace, pageRequest);
+        return reservationRepository.searchReservations(customerExternalId, carId, startDate, endDate, pageRequest);
     }
 
     @Override
@@ -88,6 +86,24 @@ public class ReservationServiceImpl implements ReservationService {
             return Optional.empty();
         }
         reservation.setCar(car);
+
+        long costOfCar = car.getDayPriceEuro() * reservation.getBeginDate().until(reservation.getEndDate()).getDays();
+
+        long costOfDistance = 0L;
+        Optional<Integer> pickupDistance = mapApiFacade.getDistanceInMeters(TRENTO_PARKING_POSITION, reservation.getBeginPosition());
+        if (pickupDistance.isPresent()) {
+            costOfDistance += pickupDistance.get() / 1000 * 5;
+        }
+        Optional<Integer> returnDistance = mapApiFacade.getDistanceInMeters(reservation.getEndPosition(), TRENTO_PARKING_POSITION);
+        if (returnDistance.isPresent()) {
+            costOfDistance += returnDistance.get() / 1000 * 5;
+        }
+
+        reservation.setCost(costOfCar + costOfDistance);
+
+        if (reservationRequest.getCalculateOnly()) {
+            return Optional.of(reservation);
+        }
 
         if (reservationRequest.getCustomer() != null) {
             Optional<CustomerEntity> customer = customerRepository.findByExternalId(reservationRequest.getCustomer().getExternalId());
@@ -121,8 +137,6 @@ public class ReservationServiceImpl implements ReservationService {
 
         reservation.setBeginDate(reservationRequest.getBeginDate());
         reservation.setEndDate(reservationRequest.getEndDate());
-        reservation.setBeginPlace(reservationRequest.getBeginPlace());
-        reservation.setEndPlace(reservationRequest.getEndPlace());
         reservation.setBeginPosition(reservationRequest.getBeginPosition());
         reservation.setEndPosition(reservationRequest.getEndPosition());
         reservation.setIsMaintenance(reservationRequest.getIsMaintenance());
@@ -156,9 +170,5 @@ public class ReservationServiceImpl implements ReservationService {
         customerRepository.save(newCustomer);
 
         reservation.setCustomer(customerRepository.getByExternalId(newCustomer.getExternalId()));
-    }
-
-    private String addSqlWildcards(String arg) {
-        return StringUtils.defaultIfBlank(arg, "") + "%";
     }
 }

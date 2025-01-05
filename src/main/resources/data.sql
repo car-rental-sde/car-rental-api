@@ -89,13 +89,13 @@ insert into customer (id, external_id,  name, surname) values
     (4, 28, 'Robert', 'Lewandowski'),
     (5, 29, 'Fernando', 'Alonso');
 
-insert into reservation (id, begin_date, begin_place, begin_position, end_date, end_place, end_position, is_maintenance,
-                         car_id, customer_id) values
-    (1, '2023-05-01', 'Mokotow', 'abc', '2023-05-05', 'Mokotow', 'abc', false, 1, 1),
-    (2, '2020-01-05', 'Praga', 'abc', '2020-01-06', 'Aaa', 'abc', false, 2, 1),
-    (3, '2020-01-08', 'Politechnika', 'abc', '2020-01-20', 'Praga', 'abc', true, 1, null),
-    (4, '2023-01-20', 'Aaa', 'abc', '2023-01-27', 'Mokotow', 'abc', false, 3, 1),
-    (5, '2023-01-27', 'Bbb', 'abc', '2023-01-29', 'Bbb', 'abc', true, 4, 1);
+insert into reservation (id, begin_date, begin_position, end_date, end_position, is_maintenance,
+                         car_id, cost, customer_id) values
+    (1, '2023-05-01', 'abc', '2023-05-05', 'abc', false, 1, 500, 1),
+    (2, '2020-01-05', 'abc', '2020-01-06', 'abc', false, 2, 300, 1),
+    (3, '2020-01-08', 'abc', '2020-01-20', 'abc', true, 1, 200, null),
+    (4, '2023-01-20', 'abc', '2023-01-27', 'abc', false, 3, 100, 1),
+    (5, '2023-01-27', 'abc', '2023-01-29', 'abc', true, 4, 200, 1);
 
 -- Restarting sequences for H2 database
 ALTER TABLE brand ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM brand);
