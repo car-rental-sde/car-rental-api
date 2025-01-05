@@ -1,5 +1,6 @@
 package it.unitn.carrentalapi.api;
 
+import it.unitn.carrentalapi.facade.CurrencyExchangeFacade;
 import it.unitn.carrentalapi.openapi.api.CarsApiDelegate;
 import it.unitn.carrentalapi.openapi.model.*;
 import it.unitn.carrentalapi.entity.CarEntity;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Currency;
 import java.util.Optional;
 
 @Slf4j
@@ -20,8 +22,8 @@ import java.util.Optional;
 public class CarsApiDelegateImpl implements CarsApiDelegate {
 
     private final CarService carService;
-
     private final EntityToModelMappers mappers;
+    private final CurrencyExchangeFacade currencyExchangeFacade;
 
     @Override
     public ResponseEntity<CarsPaginationResponseModel> searchCars(String brand, String model, String carType, String fuelType,
@@ -35,7 +37,7 @@ public class CarsApiDelegateImpl implements CarsApiDelegate {
         Page<CarEntity> cars = carService.searchCars(brand, model, carType, fuelType, isGearboxAutomatic, seatsMin, seatsMax, yearMin, yearMax, dayPriceMin, dayPriceMax, startDate, endDate, place, sortBy, sortDirection, page, size);
 
         CarsPaginationResponseModel response = new CarsPaginationResponseModel();
-        response.setCars(cars.stream().map(mappers::carToCarModel).toList());
+        response.setCars(cars.stream().map(mappers::carToCarOverviewModel).toList());
         response.setPageNumber(cars.getNumber() + 1);
         response.setPageSize(cars.getSize());
         response.setTotalRecords(cars.getTotalElements());
@@ -51,13 +53,39 @@ public class CarsApiDelegateImpl implements CarsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<CarModel> getCar(Long id) {
+    public ResponseEntity<CarModel> getCar(Long id, String currency) {
         log.debug("Getting car with id: [{}]", id);
 
         Optional<CarEntity> optionalCar = carService.getCar(id);
 
-        return optionalCar.map(car -> ResponseEntity.ok(mappers.carToCarModel(car)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        if (optionalCar.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CarEntity car = optionalCar.get();
+        CarModel carModel = mappers.carToCarModel(car);
+
+        if (currency != null && !currency.isBlank() && !currency.equals("EUR")) {
+            try {
+                Currency.getInstance(currency);
+
+
+                Long dayPriceEuro = car.getDayPriceEuro();
+                Optional<Long> convertedOptional = currencyExchangeFacade.convert(dayPriceEuro, "EUR", currency);
+
+                if (convertedOptional.isEmpty()) {
+                    log.warn("Failed to convert day price from EUR to [{}], using default currency EUR", currency);
+                    return ResponseEntity.ok(carModel);
+                }
+
+                carModel.setCurrency(currency);
+                carModel.setDayPrice(convertedOptional.get());
+            } catch (Exception e) {
+                log.warn("Currency [{}] is not valid, using default currency EUR", currency);
+            }
+        }
+
+        return ResponseEntity.ok(carModel);
     }
 
     @Override

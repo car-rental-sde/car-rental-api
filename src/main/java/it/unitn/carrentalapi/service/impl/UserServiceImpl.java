@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
         user.get().setSurname(userModel.getSurname());
         user.get().setEmail(userModel.getEmail());
         user.get().setRole(UserRole.valueOf(userModel.getUserRole().name()));
-        user.get().setIsBlocked(userModel.getIsBlocked());
         return Optional.of(userRepository.save(user.get()));
     }
 

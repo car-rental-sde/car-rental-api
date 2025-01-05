@@ -61,6 +61,12 @@ paths:
         - Cars
       summary: Get car by id
       operationId: getCar
+      parameters:
+        - name: currency
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -682,7 +688,7 @@ components:
         cars:
           type: array
           items:
-            $ref: '#/components/schemas/CarModel'
+            $ref: '#/components/schemas/CarOverviewModel'
 
     CarOverviewModel:
       type: object
@@ -716,6 +722,8 @@ components:
         dayPrice:
           type: integer
           format: int64
+        currency:
+          type: string
         color:
           type: string
 

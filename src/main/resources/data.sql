@@ -65,7 +65,7 @@ insert into model (id, avg_fuel_consumption, horse_power, is_gearbox_automatic, 
     (4, 7.5, 150, false, 'Grand Cherokee', 4, 4, 2003, 2000, 4, 4, 2),
     (5, 3.5, 80, true, '500', 4, 4, 2005, 2000, 5, 3, 1);
 
-insert into car (id, day_price, addition_date, color, mileage, model_id) values
+insert into car (id, day_price_euro, addition_date, color, mileage, model_id) values
     (1, 20, '2024-01-01', 'Czerwony', 200000, 1),
     (2, 30, '2024-01-01', 'Niebieski', 300000, 2),
     (3, 40, '2024-01-01', 'Czerwony', 400000, 3),

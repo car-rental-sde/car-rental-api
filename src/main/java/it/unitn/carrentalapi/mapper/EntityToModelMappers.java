@@ -26,6 +26,8 @@ public interface EntityToModelMappers {
         return UserRoleModel.USER;
     }
 
+    @Mapping(source = "dayPriceEuro", target = "dayPrice")
+    @Mapping(target = "currency", constant = "EUR")
     CarModel carToCarModel(CarEntity car);
 
     CarEntity carModelToCar(CarModel carModel);

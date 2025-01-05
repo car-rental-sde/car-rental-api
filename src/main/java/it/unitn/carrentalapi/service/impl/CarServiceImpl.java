@@ -128,7 +128,7 @@ public class CarServiceImpl implements CarService {
             equipmentPieceList.add(equipmentPieceRepository.getById(eqId));
         }
 
-        car.setDayPrice(carRequest.getDayPrice());
+        car.setDayPriceEuro(carRequest.getDayPrice());
         car.setColor(carRequest.getColor());
 
         return carRepository.save(car);

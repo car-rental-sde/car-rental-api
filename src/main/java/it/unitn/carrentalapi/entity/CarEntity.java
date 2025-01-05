@@ -33,7 +33,7 @@ public class CarEntity
     private List<EquipmentPieceEntity> equipment;
 
     @Column(nullable = false)
-    private Long dayPrice;
+    private Long dayPriceEuro;
 
     @Column(nullable = false)
     private String color;

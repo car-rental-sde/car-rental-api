@@ -37,8 +37,8 @@ public interface CarRepository extends JpaRepository<CarEntity, Long> {
             "and c.model.numberOfSeats <= :seatsMax " +
             "and c.model.productionYear >= :yearMin " +
             "and c.model.productionYear <= :yearMax " +
-            "and c.dayPrice >= :dayPriceMin " +
-            "and c.dayPrice <= :dayPriceMax " +
+            "and c.dayPriceEuro >= :dayPriceMin " +
+            "and c.dayPriceEuro <= :dayPriceMax " +
             "and c.id not in (select c.id from CarEntity c " +
             "   join ReservationEntity r on r.car.id = c.id " +
             "   where r.beginDate > :startDate and r.endDate < :endDate)" +
@@ -54,8 +54,8 @@ public interface CarRepository extends JpaRepository<CarEntity, Long> {
             "and c.model.numberOfSeats <= :seatsMax " +
             "and c.model.productionYear >= :yearMin " +
             "and c.model.productionYear <= :yearMax " +
-            "and c.dayPrice >= :dayPriceMin " +
-            "and c.dayPrice <= :dayPriceMax " +
+            "and c.dayPriceEuro >= :dayPriceMin " +
+            "and c.dayPriceEuro <= :dayPriceMax " +
             "and c.id not in (select c.id from CarEntity c " +
             "   join ReservationEntity r on r.car.id = c.id " +
             "   where r.beginDate > :startDate and r.endDate < :endDate)" +
