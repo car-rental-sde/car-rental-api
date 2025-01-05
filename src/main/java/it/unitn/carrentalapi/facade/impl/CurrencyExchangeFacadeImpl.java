@@ -18,8 +18,7 @@ import java.util.Optional;
 @Slf4j
 public class CurrencyExchangeFacadeImpl implements CurrencyExchangeFacade {
 
-    private static final String API_URL = "http://api.exchangeratesapi.io/v1/latest";
-    private static final String ACCESS_KEY = ""; // Replace with your actual access key
+    private static final String ACCESS_KEY = ""; // Replace with your actual access key, f.e. during CI/CD
 
     private final WebClient webClient;
 
@@ -39,7 +38,6 @@ public class CurrencyExchangeFacadeImpl implements CurrencyExchangeFacade {
             log.trace("Converting [{} {}] to [{}]", amount, fromCurrency, toCurrency);
             Mono<CurrencyRatesResponse> responseMono = webClient.get()
                     .uri(uriBuilder -> uriBuilder
-//                            .path(API_URL)
                             .scheme("https")
                             .host("api.exchangeratesapi.io")
                             .path("/v1/latest")
