@@ -363,13 +363,6 @@ paths:
             type: string
             format: date
 
-        - name: currency
-          in: query
-          required: false
-          schema:
-            type: string
-            example: EUR
-
         - name: sortBy
           in: query
           required: false

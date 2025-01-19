@@ -31,7 +31,6 @@ public class ReservationsApiImpl implements ReservationsApiDelegate {
                                                                                   Long carId,
                                                                                   LocalDate startDate,
                                                                                   LocalDate endDate,
-                                                                                  String currency,
                                                                                   ReservationsSortColumn sortBy,
                                                                                   SortDirection sortDirection,
                                                                                   Integer page,
