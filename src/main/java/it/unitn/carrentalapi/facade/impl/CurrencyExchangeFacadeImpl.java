@@ -30,7 +30,7 @@ public class CurrencyExchangeFacadeImpl implements CurrencyExchangeFacade {
         }
 
         if (ACCESS_KEY.isEmpty()) {
-            log.error("Access key is not set, currency conversion is disabled");
+            log.warn("Access key is not set, currency conversion is disabled");
             return Optional.empty();
         }
 
@@ -59,10 +59,10 @@ public class CurrencyExchangeFacadeImpl implements CurrencyExchangeFacade {
                 }
             }
 
-            log.error("Conversion failed, no rate found for [{}]", toCurrency);
+            log.warn("Conversion failed, no rate found for [{}]", toCurrency);
             return Optional.empty();
         } catch (Exception e) {
-            log.error("Error during currency conversion", e);
+            log.warn("Error during currency conversion", e);
             return Optional.empty();
         }
     }
