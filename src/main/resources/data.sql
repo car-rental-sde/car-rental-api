@@ -83,11 +83,11 @@ insert into user_table (id, email, is_blocked, name, password, surname, username
     (2, 'test@test.com', false, 'api1', '$2a$10$X68Q8foGehOGC9.88FUlT.MJpptz.Q1HN.hEKXl2NhdCDPtV6KQyi', 'api1s', 'userapi', 'API_CLIENT');
 
 insert into customer (id, external_id,  name, surname) values
-    (1, 20, 'Cristiano', 'Ronaldo'),
-    (2, 22, 'Zygzak', 'McQueen'),
-    (3, 25, 'Peter', 'Parker'),
-    (4, 28, 'Robert', 'Lewandowski'),
-    (5, 29, 'Fernando', 'Alonso');
+    (1, 1, 'Cristiano', 'Ronaldo'),
+    (2, 2, 'Zygzak', 'McQueen'),
+    (3, 3, 'Peter', 'Parker'),
+    (4, 4, 'Robert', 'Lewandowski'),
+    (5, 5, 'Fernando', 'Alonso');
 
 insert into reservation (id, begin_date, begin_position, end_date, end_position, is_maintenance,
                          car_id, cost, customer_id) values

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
 
-    @EntityGraph(attributePaths = {"car.model", "car.model.brand"}) // TODO: check if this is correct, why needed?
+    // @EntityGraph(attributePaths = {"car.model", "car.model.brand"}) // TODO: check if this is correct, why needed?
     @Query(value = """
             select r from ReservationEntity r
             where r.beginDate > :startDate
