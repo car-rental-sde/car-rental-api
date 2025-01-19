@@ -93,12 +93,12 @@ public class CarServiceImpl implements CarService {
     public CarEntity addCar(CarRequestModel carRequest) {
 
         CarEntity car = mappers.putCarModelToCar(carRequest);
-        car.setModel(modelRepository.getById(carRequest.getModelId()));
+        car.setModel(modelRepository.getReferenceById(carRequest.getModelId()));
         car.setAdditionDate(LocalDate.now());
 
         List<EquipmentPieceEntity> equipmentPieceList = new ArrayList<>();
         for (Long eqId : carRequest.getEquipment()) {
-            equipmentPieceList.add(equipmentPieceRepository.getById(eqId));
+            equipmentPieceList.add(equipmentPieceRepository.getReferenceById(eqId));
         }
         car.setEquipment( equipmentPieceList );
 
@@ -117,13 +117,13 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarEntity updateCar(Long id, CarRequestModel carRequest) {
-        CarEntity car = carRepository.getById(id);
-        car.setModel(modelRepository.getById(carRequest.getModelId()));
+        CarEntity car = carRepository.getReferenceById(id);
+        car.setModel(modelRepository.getReferenceById(carRequest.getModelId()));
         car.setMileage(carRequest.getMileage());
 
         List<EquipmentPieceEntity> equipmentPieceList = car.getEquipment();
         for (Long eqId : carRequest.getEquipment()) {
-            equipmentPieceList.add(equipmentPieceRepository.getById(eqId));
+            equipmentPieceList.add(equipmentPieceRepository.getReferenceById(eqId));
         }
 
         car.setDayPriceEuro(carRequest.getDayPrice());

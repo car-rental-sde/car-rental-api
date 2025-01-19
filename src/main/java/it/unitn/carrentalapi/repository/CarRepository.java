@@ -3,7 +3,6 @@ package it.unitn.carrentalapi.repository;
 import it.unitn.carrentalapi.entity.CarEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,19 +13,7 @@ import java.time.LocalDate;
 @Repository
 public interface CarRepository extends JpaRepository<CarEntity, Long> {
 
-//    SELECT DISTINCT c.id, c.*
-//    FROM Car c
-//    LEFT JOIN Reservation r ON r.car_id = c.id
-//    JOIN Model m ON m.Id = c.model_id
-//    JOIN car_type ct ON ct.id = m.car_type_id
-//    WHERE ct.name LIKE '%'
-//    AND c.day_price >= 0
-//    AND c.day_price <= 1000
-//    AND c.id NOT IN (SELECT c.id FROM Car c
-//            LEFT JOIN Reservation r ON r.car_id = c.id
-//            WHERE r.begin_date >= '2023-01-26' AND r.end_date <= '2023-01-30')
-
-    @EntityGraph(attributePaths = {"model", "model.brand"})
+    // @EntityGraph(attributePaths = {"model", "model.brand"})
     @Query(value = "select c from CarEntity c " +
             "where c.model.carType.name like :carType " +
             "and c.model.fuelType.name like :fuelType " +
@@ -41,8 +28,7 @@ public interface CarRepository extends JpaRepository<CarEntity, Long> {
             "and c.dayPriceEuro <= :dayPriceMax " +
             "and c.id not in (select c.id from CarEntity c " +
             "   join ReservationEntity r on r.car.id = c.id " +
-            "   where r.beginDate > :startDate and r.endDate < :endDate)" +
-            "", // FIXME: JPQL nie zawiera top ani first
+            "   where r.beginDate > :startDate and r.endDate < :endDate)",
 
     countQuery = "select count(c.id) from CarEntity c " +
             "where c.model.carType.name like :carType " +
@@ -58,8 +44,7 @@ public interface CarRepository extends JpaRepository<CarEntity, Long> {
             "and c.dayPriceEuro <= :dayPriceMax " +
             "and c.id not in (select c.id from CarEntity c " +
             "   join ReservationEntity r on r.car.id = c.id " +
-            "   where r.beginDate > :startDate and r.endDate < :endDate)" +
-            "")
+            "   where r.beginDate > :startDate and r.endDate < :endDate)")
     Page<CarEntity> searchCars(@Param("brand") String brand,
                                @Param("model") String model,
                                @Param("carType") String carType,

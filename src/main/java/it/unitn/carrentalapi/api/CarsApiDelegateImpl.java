@@ -1,11 +1,10 @@
 package it.unitn.carrentalapi.api;
 
+import it.unitn.carrentalapi.entity.CarEntity;
 import it.unitn.carrentalapi.facade.CurrencyExchangeFacade;
-import it.unitn.carrentalapi.facade.MapApiFacade;
+import it.unitn.carrentalapi.mapper.EntityToModelMappers;
 import it.unitn.carrentalapi.openapi.api.CarsApiDelegate;
 import it.unitn.carrentalapi.openapi.model.*;
-import it.unitn.carrentalapi.entity.CarEntity;
-import it.unitn.carrentalapi.mapper.EntityToModelMappers;
 import it.unitn.carrentalapi.service.CarService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,6 @@ public class CarsApiDelegateImpl implements CarsApiDelegate {
     private final CarService carService;
     private final EntityToModelMappers mappers;
     private final CurrencyExchangeFacade currencyExchangeFacade;
-    private final MapApiFacade mapApiFacade;
 
     @Override
     public ResponseEntity<CarsPaginationResponseModel> searchCars(String brand, String model, String carType, String fuelType,

@@ -57,9 +57,9 @@ public class InternalServiceImpl implements InternalService {
     public CarModelEntity addModel(CarModelRequestModel modelRequest) {
 
         CarModelEntity model = mappers.modelRequestToModel(modelRequest);
-        model.setBrand(brandRepository.getById(modelRequest.getBrandId()));
-        model.setCarType(carTypeRepository.getById(modelRequest.getCarTypeId()));
-        model.setFuelType(fuelTypeRepository.getById(modelRequest.getFuelTypeId()));
+        model.setBrand(brandRepository.getReferenceById(modelRequest.getBrandId()));
+        model.setCarType(carTypeRepository.getReferenceById(modelRequest.getCarTypeId()));
+        model.setFuelType(fuelTypeRepository.getReferenceById(modelRequest.getFuelTypeId()));
 
         return modelRepository.save(model);
     }

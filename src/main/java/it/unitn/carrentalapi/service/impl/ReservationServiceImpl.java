@@ -132,8 +132,8 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ReservationEntity updateReservation(Long id, ReservationRequestModel reservationRequest) {
 
-        ReservationEntity reservation = reservationRepository.getById(id);
-        reservation.setCar(carRepository.getById(reservationRequest.getCarId()));
+        ReservationEntity reservation = reservationRepository.getReferenceById(id);
+        reservation.setCar(carRepository.getReferenceById(reservationRequest.getCarId()));
 
         reservation.setBeginDate(reservationRequest.getBeginDate());
         reservation.setEndDate(reservationRequest.getEndDate());
@@ -152,7 +152,7 @@ public class ReservationServiceImpl implements ReservationService {
                 customer.setSurname(reservationRequest.getCustomer().getSurname());
 
                 customerRepository.save(customer);
-                reservation.setCustomer(customerRepository.getById(reservationRequest.getCustomer().getExternalId()));
+                reservation.setCustomer(customerRepository.getReferenceById(reservationRequest.getCustomer().getExternalId()));
             } else {
                 log.debug("Customer not found, for reservation [{}] creating new customer [{}]", id, reservationRequest.getCustomer());
                 createAndSaveNewCustomer(reservationRequest, reservation);

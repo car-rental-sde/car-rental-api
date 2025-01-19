@@ -38,6 +38,6 @@ public class ReservationEntity
 	private Long cost;
 
 	@ManyToOne
-	@JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)
+	@JoinColumn(name="customer_id", referencedColumnName="id")
 	private CustomerEntity customer;
 }

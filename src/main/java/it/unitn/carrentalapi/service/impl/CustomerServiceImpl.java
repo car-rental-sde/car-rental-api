@@ -40,13 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
             sortBy = CustomersSortColumn.ID;
         }
 
-        pageRequest = switch (sortBy) {
-            default -> PageRequest.of(page - 1, size, direction, sortBy.getValue());
-        };
+        pageRequest = PageRequest.of(page - 1, size, direction, sortBy.getValue());
 
-        Page<CustomerEntity> customerPage = customerRepository.searchCustomers(name, surname, pageRequest);
-
-        return customerPage;
+        return customerRepository.searchCustomers(name, surname, pageRequest);
     }
 
     private String addSqlWildcards(String arg) {
