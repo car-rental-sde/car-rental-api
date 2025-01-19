@@ -86,8 +86,6 @@ public class CarServiceImpl implements CarService {
             default -> PageRequest.of(page - 1, size, direction, sortBy.getValue());
         };
 
-
-        // TODO: beginPosition czy beginPlace?
         return carRepository.searchCars(brand, model, carType, fuelType, isGearboxAutomatic, seatsMin, seatsMax, yearMin, yearMax, dayPriceMin, dayPriceMax, startDate, endDate, pageRequest);
     }
 
