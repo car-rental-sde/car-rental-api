@@ -102,6 +102,8 @@ public class CarServiceImpl implements CarService {
         }
         car.setEquipment( equipmentPieceList );
 
+        car.setDayPriceEuro(carRequest.getDayPrice());
+
         return carRepository.save(car);
     }
 

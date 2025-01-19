@@ -66,10 +66,10 @@ insert into model (id, avg_fuel_consumption, horse_power, is_gearbox_automatic, 
     (5, 3.5, 80, true, '500', 4, 4, 2005, 2000, 5, 3, 1);
 
 insert into car (id, day_price_euro, addition_date, color, mileage, model_id) values
-    (1, 20, '2024-01-01', 'Czerwony', 200000, 1),
-    (2, 30, '2024-01-01', 'Niebieski', 300000, 2),
-    (3, 40, '2024-01-01', 'Czerwony', 400000, 3),
-    (4, 50, '2024-01-01', 'Czerwony', 500000, 4);
+    (1, 20, '2024-01-01', 'red', 200000, 1),
+    (2, 30, '2024-01-01', 'blue', 300000, 2),
+    (3, 40, '2024-01-01', 'black', 400000, 3),
+    (4, 50, '2024-01-01', 'black', 500000, 4);
 
 insert into equipment_2_car (car_id, equipment_id) values
     (1, 1),
