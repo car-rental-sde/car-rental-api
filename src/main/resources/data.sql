@@ -91,11 +91,11 @@ insert into customer (id, external_id,  name, surname) values
 
 insert into reservation (id, begin_date, begin_position, end_date, end_position, is_maintenance,
                          car_id, cost, customer_id) values
-    (1, '2023-05-01', 'abc', '2023-05-05', 'abc', false, 1, 500, 1),
-    (2, '2020-01-05', 'abc', '2020-01-06', 'abc', false, 2, 300, 1),
-    (3, '2020-01-08', 'abc', '2020-01-20', 'abc', true, 1, 200, null),
-    (4, '2023-01-20', 'abc', '2023-01-27', 'abc', false, 3, 100, 1),
-    (5, '2023-01-27', 'abc', '2023-01-29', 'abc', true, 4, 200, 1);
+    (1, '2025-01-06', '46.06706706749508,11.150431747739864', '2025-01-28', '46.0625771511208,11.115645328465872', false, 1, 450, 1);
+--     (2, '2025-01-05', 'abc', '2020-01-06', 'abc', false, 2, 300, 1),
+--     (3, '2025-01-08', 'abc', '2020-01-20', 'abc', true, 1, 200, null),
+--     (4, '2025-01-20', 'abc', '2023-01-27', 'abc', false, 3, 100, 1),
+--     (5, '2025-01-27', 'abc', '2023-01-29', 'abc', true, 4, 200, 1);
 
 -- Restarting sequences for H2 database
 ALTER TABLE brand ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM brand);
