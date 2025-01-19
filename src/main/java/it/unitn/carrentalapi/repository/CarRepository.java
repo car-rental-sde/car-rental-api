@@ -19,7 +19,7 @@ public interface CarRepository extends JpaRepository<CarEntity, Long> {
             "and c.model.fuelType.name like :fuelType " +
             "and c.model.brand.name like :brand " +
             "and c.model.name like :model " +
-            "and (:isGearboxAutomatic = null or c.model.isGearboxAutomatic = :isGearboxAutomatic) " +
+            "and (:isGearboxAutomatic is null or c.model.isGearboxAutomatic = :isGearboxAutomatic) " +
             "and c.model.numberOfSeats >= :seatsMin " +
             "and c.model.numberOfSeats <= :seatsMax " +
             "and c.model.productionYear >= :yearMin " +
@@ -35,7 +35,7 @@ public interface CarRepository extends JpaRepository<CarEntity, Long> {
             "and c.model.fuelType.name like :fuelType " +
             "and c.model.brand.name like :brand " +
             "and c.model.name like :model " +
-            "and (:isGearboxAutomatic = null or c.model.isGearboxAutomatic = :isGearboxAutomatic) " +
+            "and (:isGearboxAutomatic is null or c.model.isGearboxAutomatic = :isGearboxAutomatic) " +
             "and c.model.numberOfSeats >= :seatsMin " +
             "and c.model.numberOfSeats <= :seatsMax " +
             "and c.model.productionYear >= :yearMin " +
