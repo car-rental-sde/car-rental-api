@@ -270,6 +270,13 @@ paths:
         - Reservations
       summary: Get reservation by id
       operationId: getReservation
+      parameters:
+        - name: currency
+          in: query
+          required: false
+          schema:
+            type: string
+            example: EUR
 
       responses:
         '200':
@@ -355,6 +362,13 @@ paths:
           schema:
             type: string
             format: date
+
+        - name: currency
+          in: query
+          required: false
+          schema:
+            type: string
+            example: EUR
 
         - name: sortBy
           in: query
@@ -907,6 +921,9 @@ components:
         isMaintenance:
           type: boolean
           example: false
+        currency:
+          type: string
+          example: EUR
         cost:
           type: integer
           format: int64
@@ -938,6 +955,9 @@ components:
         isMaintenance:
           type: boolean
           example: false
+        currency:
+          type: string
+          example: EUR
         calculateOnly:
           type: boolean
           example: true

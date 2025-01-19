@@ -51,6 +51,7 @@ public interface EntityToModelMappers {
 
     CarModelRequestModel modelToModelRequest(CarModelEntity model);
 
+    @Mapping(target = "currency", constant = "EUR")
     ReservationModel reservationToReservationModel(ReservationEntity reservation);
 
     ReservationEntity putReservationModelToReservation(ReservationRequestModel reservationRequest);

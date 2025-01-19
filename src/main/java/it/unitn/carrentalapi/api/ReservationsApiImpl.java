@@ -1,6 +1,7 @@
 package it.unitn.carrentalapi.api;
 
 import it.unitn.carrentalapi.entity.ReservationEntity;
+import it.unitn.carrentalapi.facade.CurrencyExchangeFacade;
 import it.unitn.carrentalapi.mapper.EntityToModelMappers;
 import it.unitn.carrentalapi.openapi.api.ReservationsApiDelegate;
 import it.unitn.carrentalapi.openapi.model.*;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Currency;
 import java.util.Optional;
 
 @Slf4j
@@ -22,12 +24,14 @@ public class ReservationsApiImpl implements ReservationsApiDelegate {
     private final ReservationService reservationService;
 
     private final EntityToModelMappers mappers;
+    private final CurrencyExchangeFacade currencyExchangeFacade;
 
     @Override
     public ResponseEntity<ReservationsPaginationResponseModel> searchReservations(Long customerExternalId,
                                                                                   Long carId,
                                                                                   LocalDate startDate,
                                                                                   LocalDate endDate,
+                                                                                  String currency,
                                                                                   ReservationsSortColumn sortBy,
                                                                                   SortDirection sortDirection,
                                                                                   Integer page,
@@ -49,13 +53,37 @@ public class ReservationsApiImpl implements ReservationsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<ReservationModel> getReservation(Long id) {
+    public ResponseEntity<ReservationModel> getReservation(Long id, String currency) {
         log.debug("Getting reservation with id: [{}]", id);
 
-        Optional<ReservationEntity> optionalReservation = reservationService.getReservation(id);
+        Optional<ReservationEntity> reservationOptional = reservationService.getReservation(id);
 
-        return optionalReservation.map(reservation -> ResponseEntity.ok(mappers.reservationToReservationModel(reservation)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        if (reservationOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ReservationModel reservation = mappers.reservationToReservationModel(reservationOptional.get());
+
+        if (currency != null && !currency.isBlank() && !currency.equals("EUR")) {
+            try {
+                Currency.getInstance(currency);
+
+                Long dayPriceEuro = reservation.getCost();
+                Optional<Long> convertedOptional = currencyExchangeFacade.convert(dayPriceEuro, "EUR", currency);
+
+                if (convertedOptional.isEmpty()) {
+                    log.warn("Failed to convert day price from EUR to [{}], using default currency EUR", currency);
+                    return ResponseEntity.ok(reservation);
+                }
+
+                reservation.setCurrency(currency);
+                reservation.setCost(convertedOptional.get());
+            } catch (Exception e) {
+                log.warn("Currency [{}] is not valid, using default currency EUR", currency);
+            }
+        }
+
+        return ResponseEntity.ok(reservation);
     }
 
     @Override
@@ -63,9 +91,34 @@ public class ReservationsApiImpl implements ReservationsApiDelegate {
         log.debug("Adding reservation with request: [{}]", reservationRequest);
 
         Optional<ReservationEntity> reservationOptional = reservationService.addReservation(reservationRequest);
-        return reservationOptional.map(reservationEntity -> ResponseEntity.ok(mappers.reservationToReservationModel(reservationEntity)))
-                .orElseGet(() -> ResponseEntity.badRequest().build());
 
+        if (reservationOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ReservationModel reservation = mappers.reservationToReservationModel(reservationOptional.get());
+
+        String currency = reservationRequest.getCurrency();
+        if (currency != null && !currency.isBlank() && !currency.equals("EUR")) {
+            try {
+                Currency.getInstance(currency);
+
+                Long costInEuro = reservation.getCost();
+                Optional<Long> convertedOptional = currencyExchangeFacade.convert(costInEuro, "EUR", currency);
+
+                if (convertedOptional.isEmpty()) {
+                    log.warn("Failed to convert cost from EUR to [{}], using default currency EUR", currency);
+                    return ResponseEntity.ok(reservation);
+                }
+
+                reservation.setCurrency(currency);
+                reservation.setCost(convertedOptional.get());
+            } catch (Exception e) {
+                log.warn("Currency [{}] is not valid, using default currency EUR", currency);
+            }
+        }
+
+        return ResponseEntity.ok(reservation);
     }
 
     @Override
