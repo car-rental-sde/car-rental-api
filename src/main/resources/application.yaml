@@ -7,6 +7,9 @@ server:
   port: 8060
 
 spring:
+  graphql:
+    graphiql:
+      enabled: true
   application:
     name: car-rental-api
   h2:
@@ -22,7 +25,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true # create tables before populating them
-    show-sql: false
+    show-sql: true
 #    hibernate:
 #      ddl-auto: validate
     properties:
@@ -39,7 +42,8 @@ logging:
       unitn: trace
     org:
       springframework:
-        security: debug # info | debug
+        security: info # info | debug
+#        graphql: debug
 
 management:
   endpoints:

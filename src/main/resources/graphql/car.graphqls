@@ -1,0 +1,93 @@
+type CarsPaginationResponse {
+    pageNumber: Int
+    pageSize: Int
+    totalRecords: Int
+    cars: [CarOverview]
+}
+
+type CarOverview {
+    id: Int
+    model: CarModel
+    dayPrice: Int
+    color: String
+}
+
+type Car {
+    id: Int
+    model: CarModel
+    mileage: Int
+    equipment: [EquipmentPiece]
+# graphql power can be seen here, we do not have to fetch day price that is an "expensive" operation
+    dayPrice: Int
+    currency: String
+    color:  String
+#    Added
+#    reservations: [Reservation]
+}
+input CarRequest {
+    modelId: Int
+    mileage: Int
+    equipment: [Int]
+    dayPrice: Int
+    color: String
+}
+
+type CarModel {
+    id: Int
+    brand: Brand
+    name: String
+    productionYear: Int
+    carType: CarType
+    fuelType: FuelType
+    isGearboxAutomatic: Boolean
+    numberOfDoors: Int
+    numberOfSeats: Int
+    trunkCapacity: Int
+    horsePower: Int
+    avgFuelConsumption: Float
+}
+
+input CarModelRequest {
+    brandId: Int!
+    name: String!
+    productionYear: Int!
+    carTypeId: Int!
+    fuelTypeId: Int!
+    isGearboxAutomatic: Boolean!
+    numberOfDoors: Int!
+    numberOfSeats: Int!
+    trunkCapacity: Int!
+    horsePower: Int!
+    avgFuelConsumption: Float!
+}
+
+type Brand {
+    id: Int!
+    name: String!
+    country: String!
+}
+
+type CarType {
+    id: Int!
+    name: String!
+}
+
+type FuelType {
+    id: Int!
+    name: String!
+}
+
+type EquipmentPiece {
+    id: Int!
+    name: String!
+}
+
+enum CarsSortColumn {
+    BRAND
+    MODEL
+}
+
+enum SortDirection {
+    ASC
+    DESC
+}
