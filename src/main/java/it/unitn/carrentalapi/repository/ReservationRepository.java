@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
@@ -37,4 +38,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
             @Param("endDate") LocalDate endDate,
             Pageable pageable
     );
+
+    List<ReservationEntity> findByCarId(Long carId);
 }

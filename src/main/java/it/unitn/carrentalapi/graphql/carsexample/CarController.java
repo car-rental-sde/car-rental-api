@@ -1,20 +1,25 @@
 package it.unitn.carrentalapi.graphql.carsexample;
 
+import graphql.schema.DataFetchingFieldSelectionSet;
 import it.unitn.carrentalapi.entity.CarEntity;
+import it.unitn.carrentalapi.entity.ReservationEntity;
 import it.unitn.carrentalapi.facade.CurrencyExchangeFacade;
 import it.unitn.carrentalapi.mapper.EntityToModelMappers;
 import it.unitn.carrentalapi.openapi.model.*;
 import it.unitn.carrentalapi.service.CarService;
+import it.unitn.carrentalapi.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -23,6 +28,7 @@ import java.util.Optional;
 public class CarController {
 
     private final CarService carService;
+    private final ReservationService reservationService;
     private final EntityToModelMappers mappers;
     private final CurrencyExchangeFacade currencyExchangeFacade;
 
@@ -102,6 +108,12 @@ public class CarController {
         }
 
         return carModel;
+    }
+
+    @SchemaMapping(typeName = "Car", field = "reservations")
+    public List<ReservationEntity> getReservations(CarModel car) {
+        log.debug("Fetching reservations for car with id: [{}]", car.getId());
+        return reservationService.getReservationsByCarId(car.getId());
     }
 
     @MutationMapping

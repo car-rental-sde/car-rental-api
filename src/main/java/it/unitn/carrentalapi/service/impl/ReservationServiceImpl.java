@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -122,6 +123,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Optional<ReservationEntity> getReservation(Long id) {
         return reservationRepository.findById(id);
+    }
+
+    @Override
+    public List<ReservationEntity> getReservationsByCarId(Long carId) {
+        return reservationRepository.findByCarId(carId);
     }
 
     @Override

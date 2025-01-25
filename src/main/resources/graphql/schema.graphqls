@@ -1,5 +1,6 @@
 type Query {
     bookById(id: ID!): Book
+    getBooks: [Book!]!
 
     # Cars-related queries
     getCar(id: Int!, currency: String): Car
@@ -34,6 +35,9 @@ type Query {
 }
 
 type Mutation {
+    # Books-related mutations
+    addBook(input: AddBookInput!): Book
+
     # Cars-related mutations
     updateCar(id: Int!, carRequest: CarRequest!): Car
     deleteCar(id: Int!): Boolean
