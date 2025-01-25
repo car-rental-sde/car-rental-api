@@ -1,6 +1,5 @@
 package it.unitn.carrentalapi.graphql.carsexample;
 
-import graphql.schema.DataFetchingFieldSelectionSet;
 import it.unitn.carrentalapi.entity.CarEntity;
 import it.unitn.carrentalapi.entity.ReservationEntity;
 import it.unitn.carrentalapi.facade.CurrencyExchangeFacade;
