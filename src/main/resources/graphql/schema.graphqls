@@ -1,48 +1,55 @@
-type Query {
-    bookById(id: ID!): Book
-    getBooks: [Book!]!
+#type Query {
+#    # Books-related queries
+#    bookById(id: ID!): Book
+#    getBooks: [Book!]!
+#
+#    # Cars-related queries
+#    getCar(id: Int!, currency: String): Car
+#    searchCars(
+#        brand: String
+#        model: String
+#        carType: String
+#        fuelType: String
+#        isGearboxAutomatic: Boolean
+#        seatsMin: Int = 0
+#        seatsMax: Int = 10
+#        yearMin: Int = 1950
+#        yearMax: Int = 2100
+#        dayPriceMin: Int = 0
+#        dayPriceMax: Int = 1000
+#        startDate: String
+#        endDate: String
+#        place: String
+#        sortBy: CarsSortColumn
+#        sortDirection: SortDirection
+#        page: Int = 1
+#        size: Int = 10
+#    ): CarsPaginationResponse
+#
+#    # Internal data queries
+#    getBrands: [Brand]
+#    getCarModels: [CarModel]
+#    getModelsByBrand(brandId: Int!): [CarModel]
+#    getCarTypes: [CarType]
+#    getFuelTypes: [FuelType]
+#    getEquipmentPieces: [EquipmentPiece]
+#}
+#
+#type Mutation {
+#    # Books-related mutations
+#    addBook(input: AddBookInput!): Book
+#
+#    # Cars-related mutations
+#    updateCar(id: Int!, carRequest: CarRequest!): Car
+#    deleteCar(id: Int!): Boolean
+#    addCar(carRequest: CarRequest!): Car
+#
+#    # Internal data mutations
+#    addCarModel(carModelRequest: CarModelRequest!): CarModel
+#}
 
-    # Cars-related queries
-    getCar(id: Int!, currency: String): Car
-    searchCars(
-        brand: String
-        model: String
-        carType: String
-        fuelType: String
-        isGearboxAutomatic: Boolean
-        seatsMin: Int = 0
-        seatsMax: Int = 10
-        yearMin: Int = 1950
-        yearMax: Int = 2100
-        dayPriceMin: Int = 0
-        dayPriceMax: Int = 1000
-        startDate: String
-        endDate: String
-        place: String
-        sortBy: CarsSortColumn
-        sortDirection: SortDirection
-        page: Int = 1
-        size: Int = 10
-    ): CarsPaginationResponse
-
-    # Internal data queries
-    getBrands: [Brand]
-    getCarModels: [CarModel]
-    getModelsByBrand(brandId: Int!): [CarModel]
-    getCarTypes: [CarType]
-    getFuelTypes: [FuelType]
-    getEquipmentPieces: [EquipmentPiece]
-}
-
-type Mutation {
-    # Books-related mutations
-    addBook(input: AddBookInput!): Book
-
-    # Cars-related mutations
-    updateCar(id: Int!, carRequest: CarRequest!): Car
-    deleteCar(id: Int!): Boolean
-    addCar(carRequest: CarRequest!): Car
-
-    # Internal data mutations
-    addCarModel(carModelRequest: CarModelRequest!): CarModel
+type Dummy {
+    id: ID!
+    name: String
+    description: String
 }

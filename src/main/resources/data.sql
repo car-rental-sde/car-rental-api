@@ -97,6 +97,16 @@ insert into reservation (id, begin_date, begin_position, end_date, end_position,
 --     (4, '2025-01-20', 'abc', '2023-01-27', 'abc', false, 3, 100, 1),
 --     (5, '2025-01-27', 'abc', '2023-01-29', 'abc', true, 4, 200, 1);
 
+-- INSERT INTO book (id, name, page_count, author_id, content) VALUES (1, 'Effective Java', 416, 'author-1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore etdolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eufugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+-- INSERT INTO book (id, name, page_count, author_id, content) VALUES (2, 'Hitchhikers Guide to the Galaxy', 208, 'author-2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore etdolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eufugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+
+INSERT INTO author (id, first_name, last_name) VALUES (1, 'Joshua', 'Bloch');
+INSERT INTO author (id, first_name, last_name) VALUES (2, 'Douglas', 'Adams');
+INSERT INTO author (id, first_name, last_name) VALUES (3, 'Bill', 'Bryson');
+
+INSERT INTO book (id, name, page_count, author_id, content) VALUES (1, 'Effective Java', 416, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore etdolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat.');
+INSERT INTO book (id, name, page_count, author_id, content) VALUES (2, 'Hitchhikers Guide to the Galaxy', 208, 2, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore etdolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquipex ea commodo consequat.');
+
 -- Restarting sequences for H2 database
 ALTER TABLE brand ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM brand);
 ALTER TABLE model ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM model);
@@ -104,3 +114,6 @@ ALTER TABLE car ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM car);
 ALTER TABLE customer ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM customer);
 ALTER TABLE user_table ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM user_table);
 ALTER TABLE reservation ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM reservation);
+
+ALTER TABLE book ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM book);
+ALTER TABLE author ALTER COLUMN id RESTART WITH (SELECT MAX(id) + 1 FROM author);
